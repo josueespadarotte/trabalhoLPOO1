@@ -25,36 +25,6 @@ public class Profissional extends Pessoa{
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public String getEspecialidade() {
         return especialidade;
     }
@@ -83,3 +53,4 @@ public class Profissional extends Pessoa{
         this.numeroRegistro = numeroRegistro;
     }
 }
+
