@@ -23,5 +23,33 @@ public class Agendamento {
     public void cancelar() {
         this.status = "Cancelado";
     }
+
+     public String getData() {
+        return data;
+    }
+
+    //gets
+
+    public String getHorarioInicio() {
+        return horarioInicio;
+    }
+
+    public String getHorarioFim() {
+        return horarioFim;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getModalidade() {
+        return modalidade;
+    }
+       
+
+
+
 }
+
+
 

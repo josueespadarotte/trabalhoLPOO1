@@ -29,34 +29,7 @@ public class Cliente extends Pessoa {
     public double calcularIMC() {
         return peso / (altura * altura);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     public Integer getIdade() {
         return idade;
     }
