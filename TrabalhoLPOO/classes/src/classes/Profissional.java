@@ -6,24 +6,19 @@ public class Profissional extends Pessoa{
     private Double avaliacao;
     private String disponibilidade;
 
-    //Construtor
-    public Profissional(){
-        super();
-    }
-
-    public Profissional(String nome, Integer id, String cpf, Integer telefone, String email,
-                        String sexo, String especialidade, Integer numeroRegistro, Double avaliacao, String disponibilidade) {
-        super(sexo, nome, id, cpf, telefone, email);
+    public Profissional(Integer id, String nome, String cpf, Integer telefone, String email, String senha, String sexo,
+                        String especialidade, Integer numeroRegistro, Double avaliacao, String disponibilidade) {
+        super(id, nome, cpf, telefone, email, senha, sexo);
         this.especialidade = especialidade;
         this.numeroRegistro = numeroRegistro;
         this.avaliacao = avaliacao;
         this.disponibilidade = disponibilidade;
     }
+
     //metodo para atualizar a disponibilidade do personal
     public void atualizarDisponibilidade(String nova) {
         this.disponibilidade = nova;
     }
-
 
     public String getEspecialidade() {
         return especialidade;
@@ -52,5 +47,51 @@ public class Profissional extends Pessoa{
     public void setNumeroRegistro(Integer numeroRegistro) {
         this.numeroRegistro = numeroRegistro;
     }
+
+
+    /*métodos e funcionalidades*/
+
+    public void addAgenda(Agendamento novoAgendamento){
+
+    }
+    public void removerAgenda(Agendamento rmAgendamento){
+
+    }
+    public void listarHrDisponivel(String disponibilidade){
+
+    }
+    public void calcularValorDisp(){
+
+    }
+    public boolean estaDisponivel(){
+        return false;
+    }
+    public boolean marcarHr(Cliente c){
+        return false;
+    }
+    public void cancelarHr(Agendamento ag){
+
+    }
+    public void exibirAgenda(){
+
+    }
+
 }
 
+/*Funcionais
+
+adicionarAgenda(Agenda novaAgenda)
+
+removerAgenda(Agenda agenda)
+
+listarHorariosDisponiveis(LocalDate data)
+
+calcularValorAtendimento(double horas)
+
+exibirAgendaCompleta()
+
+estaDisponivel(LocalDateTime dataHora)
+
+marcarHorario(Cliente cliente, LocalDateTime dataHora)
+
+cancelarHorario(Agendamento ag)*/
