@@ -1,12 +1,16 @@
 package classes;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class Profissional extends Pessoa{
     private String especialidade;
     private Integer numeroRegistro;
     private Double avaliacao;
     private String disponibilidade;
 
-    public Profissional(Integer id, String nome, String cpf, Integer telefone, String email, String senha, String sexo,
+
+    public Profissional(Integer id, String nome, String cpf, String telefone, String email, String senha, String sexo,
                         String especialidade, Integer numeroRegistro, Double avaliacao, String disponibilidade) {
         super(id, nome, cpf, telefone, email, senha, sexo);
         this.especialidade = especialidade;
@@ -51,6 +55,19 @@ public class Profissional extends Pessoa{
 
     /*métodos e funcionalidades*/
 
+    ArrayList<Profissional> listaProfissional = new ArrayList();
+
+    public void cadastrarCliete (Cliente cliente) {
+        if (cliente != null) {
+
+        }
+
+    }
+    public void removerCliete (Cliente cliente) {
+
+    }
+
+
     public void addAgenda(Agendamento novoAgendamento){
 
     }
@@ -66,7 +83,7 @@ public class Profissional extends Pessoa{
     public boolean estaDisponivel(){
         return false;
     }
-    public boolean marcarHr(Cliente c){
+    public boolean marcarHr(Cliente c, Agendamento novoAgendamento){
         return false;
     }
     public void cancelarHr(Agendamento ag){
@@ -77,21 +94,3 @@ public class Profissional extends Pessoa{
     }
 
 }
-
-/*Funcionais
-
-adicionarAgenda(Agenda novaAgenda)
-
-removerAgenda(Agenda agenda)
-
-listarHorariosDisponiveis(LocalDate data)
-
-calcularValorAtendimento(double horas)
-
-exibirAgendaCompleta()
-
-estaDisponivel(LocalDateTime dataHora)
-
-marcarHorario(Cliente cliente, LocalDateTime dataHora)
-
-cancelarHorario(Agendamento ag)*/
