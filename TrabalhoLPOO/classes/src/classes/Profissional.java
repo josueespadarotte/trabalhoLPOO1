@@ -1,7 +1,6 @@
 package classes;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class Profissional extends Pessoa{
     private String especialidade;
@@ -169,10 +168,17 @@ public class Profissional extends Pessoa{
     public double calcularValorAula(int dias) {
         return this.valorAula * dias;
     }
+    public void registrarAvaliacao(Cliente aluno, Avaliacao novaAvaliacao) {
+        // Verifica se os objetos não são nulos antes de tentar salvar
+        if (aluno != null && novaAvaliacao != null) {
+            aluno.adicionarAvaliacao(novaAvaliacao);
+            System.out.println("Avaliação registrada com sucesso para " + aluno.getNome());
+        } else {
+            System.out.println("Erro: Aluno ou Avaliação inválidos.");
+        }
+    }
 
-
-    public void registrarAvaliacao(Cliente alunoAval, Scanner sc) {
-
+    public Cliente buscarAluno(String emailVerAval) {
 
     }
 }

@@ -1,10 +1,8 @@
 package main;
 
-import classes.Cliente;
-import classes.FichaTreino;
-import classes.Pessoa;
-import classes.Profissional;
+import classes.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -187,39 +185,49 @@ public class Application {
                                                     } catch (Exception e) {
                                                         System.out.println("Erro ao criar ficha!");
                                                     }
-                                            }while (escolha != 0);
-
-                                        Cliente alunoAtualiza = personalLogado.buscarClienteId();
-
-                                        if (alunoAtualiza != null) {
-                                            personalLogado.atualizarFichaTreino(alunoAtualiza, sc);
-                                            System.out.println("Ficha atualizada!");
-                                        } else {
-                                            System.out.println("Aluno não encontrado!");
+                                                } while (escolha != 0);
+                                            }
                                         }
-                                        break;
 
-                                        // avaliação de aluno
+                                        // avaliar aluno
                                     case 4:
-                                        System.out.println("Avaliar qual aluno? Email:");
-                                        String iDAv = sc.next();
-                                        Cliente alunoAval = personalLogado.buscarClienteId(iDAv);
-
+                                        System.out.println("Avaliar qual aluno? ID:");
+                                        int idBusca = sc.nextInt();
+                                        Cliente alunoAval = personalLogado.buscarClienteId(idBusca);
                                         if (alunoAval != null) {
-                                            personalLogado.registrarAvaliacao(alunoAval, sc);
-                                            System.out.println("Avaliação registrada!");
+                                            System.out.println("Nota (0-10): ");
+                                            int nota = sc.nextInt();
+
+                                            System.out.println("Data (dd/MM/yyyy): ");
+                                            String dataTexto = sc.next();
+
+                                            try {
+                                                //conversao para o formato date
+                                                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                                                java.util.Date dataObjeto = formato.parse(dataTexto);
+
+                                                Avaliacao novaAvaliacao = new Avaliacao(nota, dataObjeto);
+
+                                                // passa tudo pronto para o Profissional
+                                                personalLogado.registrarAvaliacao(alunoAval, novaAvaliacao);
+
+                                            } catch (Exception e) {
+                                                System.out.println("Erro: Data inválida! Use o formato dia/mês/ano (ex: 25/12/2023).");
+                                            }
+
                                         } else {
                                             System.out.println("Aluno não encontrado!");
                                         }
                                         break;
 
+                                        // personal visualiza as avalições dos alunos para ele
                                     case 5:
-                                        System.out.println("Ver avaliações de qual aluno? Email:");
-                                        String emailVerAval = sc.next();
-                                        Cliente alunoVerAval = personalLogado.buscarAluno(emailVerAval);
+                                        System.out.println("=== AVALIAÇÕES ===");
+                                        int id = sc.nextInt();
+                                        Cliente verAvaldeAluno = personalLogado.buscarAluno(id);
 
-                                        if (alunoVerAval != null) {
-                                            alunoVerAval.getMedida();
+                                        if (verAvaldeAluno != null) {
+                                            verAvaldeAluno.getMedida();
                                         } else {
                                             System.out.println("Aluno não encontrado!");
                                         }
