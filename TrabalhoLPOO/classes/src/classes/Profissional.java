@@ -46,6 +46,8 @@ public class Profissional extends Pessoa{
         this.avaliacao = avaliacao;
         this.disponibilidade = disponibilidade;
         this.valorAula = valorAula;
+        this.listaClientes = new ArrayList<>();
+        this.agenda = new ArrayList<>();
 
     }
     //metodo para atualizar a disponibilidade do personal
@@ -169,7 +171,7 @@ public class Profissional extends Pessoa{
 
     public void listarClientes() {
         for (Cliente c : listaClientes) {
-            System.out.println(c);
+            System.out.println(c.toString());
         }
     }
 

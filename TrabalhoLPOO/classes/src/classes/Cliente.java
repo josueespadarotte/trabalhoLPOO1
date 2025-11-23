@@ -159,4 +159,9 @@ public class Cliente extends Pessoa {
     public void adicionarAvaliacao(Avaliacao novaAvaliacao) {
 
     }
+
+    @Override
+    public String toString() {
+        return "ID: " + getId() + " | Nome: " + getNome() + " | Objetivo: " + this.objetivo;
+    }
 }

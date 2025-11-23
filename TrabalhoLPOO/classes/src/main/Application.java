@@ -14,11 +14,17 @@ public class Application {
         ArrayList<Pessoa.exercicies> listaexercicio = new ArrayList<>();
         List<Pessoa> cadastros = new ArrayList<>();
 
-        cadastros.add(new Profissional(1221, "Dr.Davi Brito", "726394860032", "27999362832",
-                "Davibrito_0@gmail.com", "5382", "M", "fisioterapeuta", 4342342));
-        cadastros.add(new Cliente(213, "Andrea Horta", "123.456.789-00", "1231123554",
+        Profissional personalDavi = new Profissional(1221, "Dr.Davi Brito", "726394860032", "27999362832",
+                "Davibrito_0@gmail.com", "5382", "M", "fisioterapeuta", 4342342);
+
+        Cliente clienteAndrea = new Cliente(213, "Andrea Horta", "123.456.789-00", "1231123554",
                 "andrea@email.com", "senha123", "F", 30, 65.5, 1.65,
-                "Hipertrofia", "Nenhuma"));
+                "Hipertrofia", "Nenhuma");
+
+        personalDavi.cadastrarCliente(clienteAndrea);
+
+        cadastros.add(personalDavi);
+        cadastros.add(clienteAndrea);
 
         System.out.println("===TELA DE LOGIN===");
         int opcao;
@@ -306,9 +312,10 @@ public class Application {
 
                 case 2:
                     System.out.println("===Tela de Cadastro====");
-                    System.out.println("Escolha a modalidade:");
                     System.out.print("1. Aluno\n" +
                             "2. Personal Trainer");
+                    System.out.println("\nEscolha a modalidade:");
+
                     String modalidade = sc.next().toLowerCase();
                     System.out.print("=====Tela de cadastro=====\n" + "Digite seu nome: ");
                     String nome = sc.next();
