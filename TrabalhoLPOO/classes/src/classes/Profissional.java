@@ -20,7 +20,7 @@ public class Profissional extends Pessoa{
         this.avaliacao = avaliacao;
         this.disponibilidade = disponibilidade;
         this.valorAula = valorAula;
-        this.avAlunos = new ArrayList<Avaliacao>();
+
     }
     //metodo para atualizar a disponibilidade do personal
     public void atualizarDisponibilidade(String nova) {
@@ -190,7 +190,7 @@ public class Profissional extends Pessoa{
     }
 
     public void visualizarAvaliacoesDosAlunos() {
-        System.out.println("\n=== FEEDBACKS DOS ALUNOS (Lista avAlunos) ===");
+        System.out.println("\n=== FEEDBACKS DOS ALUNOS ===");
 
         if (avAlunos.isEmpty()) {
             System.out.println("Nenhuma avaliação recebida ainda.");
@@ -200,7 +200,7 @@ public class Profissional extends Pessoa{
             for (Avaliacao av : avAlunos) {
                 System.out.println("------------------------------------------------");
                 System.out.println("Data: " + sdf.format(av.getData()));
-                System.out.println("Nota: " + av.getNota() + "/10");
+                System.out.println("Nota: " + av.getNota() + "/5");
                 System.out.println("Comentário: " + av.getComentario());
             }
             System.out.println("------------------------------------------------\n");

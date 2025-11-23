@@ -2,6 +2,7 @@ package main;
 
 import classes.*;
 
+import javax.crypto.spec.PSource;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ public class Application {
                 "5382", "M", "fisioterapeuta", 4342342));
         cadastros.add(new Cliente(213, "Andrea Horta", "123.456.789-00", "1231123554", "andrea@email.com",
                 "senha123", "F", 30, 65.5, 1.65, "Hipertrofia", "Nenhuma"));
-
 
         System.out.println("===TELA DE LOGIN===");
         int opcao;
@@ -192,25 +192,47 @@ public class Application {
 
                                         // avaliar aluno
                                     case 4:
-                                        System.out.println("Avaliar qual aluno? ID:");
+                                        System.out.println("==== Avaliar Aluno ====");
+                                        System.out.println("ID do Aluno:");
                                         int idBusca = sc.nextInt();
-                                        Cliente alunoAval = personalLogado.buscarClienteId(idBusca);
+                                        Cliente alunoAval = personalLogado.buscarClienteId(idBusca); //
+
                                         if (alunoAval != null) {
-                                            System.out.println("Nota (0-10): ");
-                                            int nota = sc.nextInt();
+                                            int nota = -1;
+                                            boolean notaValida = false;
+
+                                            // Loop para garantir que a nota seja válida
+                                            while (!notaValida) {
+                                                System.out.println("Nota (0 a 5): ");
+
+                                                // Verifica se o usuário digitou um número
+                                                if (sc.hasNextInt()) {
+                                                    nota = sc.nextInt();
+
+                                                    // Verifica se o número está entre 0 e 5
+                                                    if (nota >= 0 && nota <= 5) {
+                                                        notaValida = true;
+                                                    } else {
+                                                        System.out.println("Erro: A nota deve ser entre 0 e 5.");
+                                                    }
+                                                } else {
+                                                    System.out.println("Erro: Digite apenas números inteiros.");
+                                                    sc.next();
+                                                }
+                                            }
 
                                             System.out.println("Data (dd/MM/yyyy): ");
                                             String dataTexto = sc.next();
 
                                             try {
-                                                //conversao para o formato date
                                                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                                                 java.util.Date dataObjeto = formato.parse(dataTexto);
 
-                                                Avaliacao novaAvaliacao = new Avaliacao(nota, dataObjeto);
+                                                // Cria a avaliação
+                                                Avaliacao novaAvaliacao = new Avaliacao(nota, dataObjeto); //
 
-                                                // passa tudo pronto para o Profissional
-                                                personalLogado.registrarAvaliacao(alunoAval, novaAvaliacao);
+                                                // Passa tudo pronto p Profissional
+                                                personalLogado.registrarAvaliacao(alunoAval, novaAvaliacao); //
 
                                             } catch (Exception e) {
                                                 System.out.println("Erro: Data inválida! Use o formato dia/mês/ano (ex: 25/12/2023).");
@@ -297,8 +319,10 @@ public class Application {
                     } else {
                         System.out.print("Especialidade: ");
                         String especialidade = sc.next();
+                        sc.nextLine();
                         System.out.print("Número de registro: ");
                         int registro = sc.nextInt();
+                        sc.nextLine();
                         cadastros.add(new Profissional(id, nome, cpf, telefone, email, senha, sexo, especialidade, registro));
                     }
                     System.out.println("Cadastrado com sucesso!\nSeja Bem Vindo!");
