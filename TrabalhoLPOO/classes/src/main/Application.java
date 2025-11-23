@@ -12,6 +12,7 @@ public class Application {
 
         Scanner sc = new Scanner(System.in);
         List<Pessoa> cadastros = new ArrayList<>();
+
         cadastros.add(new Profissional(1221, "Dr.Davi Brito", "726394860032", "27999362832", "Davibrito_0@gmail.com",
                 "5382", "M", "fisioterapeuta", 4342342));
         cadastros.add(new Cliente(213, "Andrea Horta", "123.456.789-00", "1231123554", "andrea@email.com",
@@ -220,18 +221,13 @@ public class Application {
                                         }
                                         break;
 
+
+
                                         // personal visualiza as avalições dos alunos para ele
                                     case 5:
-                                        System.out.println("=== AVALIAÇÕES ===");
-                                        int id = sc.nextInt();
-                                        Cliente verAvaldeAluno = personalLogado.buscarAluno(id);
-
-                                        if (verAvaldeAluno != null) {
-                                            verAvaldeAluno.getMedida();
-                                        } else {
-                                            System.out.println("Aluno não encontrado!");
-                                        }
+                                        personalLogado.visualizarAvaliacoesDosAlunos();
                                         break;
+
 
                                     case 6:
                                         personalLogado.atualizarPerfil(sc);

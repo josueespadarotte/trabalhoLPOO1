@@ -1,5 +1,7 @@
 package classes;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Profissional extends Pessoa{
@@ -18,6 +20,7 @@ public class Profissional extends Pessoa{
         this.avaliacao = avaliacao;
         this.disponibilidade = disponibilidade;
         this.valorAula = valorAula;
+        this.avAlunos = new ArrayList<Avaliacao>();
     }
     //metodo para atualizar a disponibilidade do personal
     public void atualizarDisponibilidade(String nova) {
@@ -171,7 +174,7 @@ public class Profissional extends Pessoa{
     public void registrarAvaliacao(Cliente aluno, Avaliacao novaAvaliacao) {
         // Verifica se os objetos não são nulos antes de tentar salvar
         if (aluno != null && novaAvaliacao != null) {
-            aluno.adicionarAvaliacao(novaAvaliacao);
+            aluno.adicionarAvaliacao(novaAvaliacao); // falta fazer esse metodo
             System.out.println("Avaliação registrada com sucesso para " + aluno.getNome());
         } else {
             System.out.println("Erro: Aluno ou Avaliação inválidos.");
@@ -179,7 +182,30 @@ public class Profissional extends Pessoa{
     }
 
     public Cliente buscarAluno(String emailVerAval) {
+        return null;
+    }
 
+    public void adicionarFeedback(Avaliacao avaliacao) {
+        this.avAlunos.add(avaliacao);
+    }
+
+    public void visualizarAvaliacoesDosAlunos() {
+        System.out.println("\n=== FEEDBACKS DOS ALUNOS (Lista avAlunos) ===");
+
+        if (avAlunos.isEmpty()) {
+            System.out.println("Nenhuma avaliação recebida ainda.");
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+            for (Avaliacao av : avAlunos) {
+                System.out.println("------------------------------------------------");
+                System.out.println("Data: " + sdf.format(av.getData()));
+                System.out.println("Nota: " + av.getNota() + "/10");
+                System.out.println("Comentário: " + av.getComentario());
+            }
+            System.out.println("------------------------------------------------\n");
+        }
     }
 }
+
 
