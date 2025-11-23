@@ -11,6 +11,32 @@ public class Profissional extends Pessoa{
     private String disponibilidade;
     private double valorAula;
 
+    private List<Avaliacao> avAlunos;
+
+
+    public class exercicies{
+        private String nomeex;
+        private double pesoex;
+        private int reps;
+        public exercicies(String nomeex, double pesoex, int reps){
+            this.nomeex = nomeex;
+            this.pesoex = pesoex;
+            this.reps = reps;
+        }
+        public String getNomeex() {
+            return nomeex;
+        }
+        public double getPesoex() {
+            return pesoex;
+        }
+        public int getReps() {
+            return reps;
+        }
+
+        public String imprimirList(){
+            return getNomeex() + "kg " + getPesoex() + "reps: " +getReps();
+        }
+    }
 
     public Profissional(Integer id, String nome, String cpf, String telefone, String email, String senha, String sexo,
                         String especialidade, Integer numeroRegistro) {
@@ -121,6 +147,12 @@ public class Profissional extends Pessoa{
 
 
     // gestao de cliente
+
+
+
+    public void registrarCarga(String nome, double peso, int reps){
+        Pessoa.exercicies carga = new Pessoa.exercicies(nome, peso, reps);
+    }
     public void cadastrarCliente(Cliente cliente) {
         if (cliente != null && !listaClientes.contains(cliente)){
             listaClientes.add(cliente);

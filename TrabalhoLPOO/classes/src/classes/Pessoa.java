@@ -9,7 +9,16 @@ public class Pessoa {
     private String senha;
     private String sexo;
 
-
+    public class exercicies{
+        private String nomeex;
+        private double pesoex;
+        private int reps;
+        public exercicies(String nomeex, double pesoex, int reps){
+            this.nomeex = nomeex;
+            this.pesoex = pesoex;
+            this.reps = reps;
+        }
+    }
     public Pessoa(Integer id, String nome, String cpf, String telefone, String email, String senha, String sexo) {
         this.id = id;
         this.nome = nome;
@@ -19,8 +28,6 @@ public class Pessoa {
         this.senha = senha;
         this.sexo = sexo;
     }
-
-
     public Integer getId() {
         return id;
     }
