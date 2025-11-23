@@ -185,7 +185,7 @@ public class Profissional extends Pessoa{
         return null;
     }
 
-    public void adicionarFeedback(Avaliacao avaliacao) {
+    public void addFeedback(Avaliacao avaliacao) {
         this.avAlunos.add(avaliacao);
     }
 
