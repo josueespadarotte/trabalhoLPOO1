@@ -240,6 +240,41 @@ public class Profissional extends Pessoa{
             System.out.println("------------------------------------------------\n");
         }
     }
+
+    @Override
+    public String toString() {
+        return "Profissional{" +
+                "especialidade='" + especialidade + '\'' +
+                ", numeroRegistro=" + numeroRegistro +
+                ", avaliacao=" + avaliacao +
+                ", disponibilidade='" + disponibilidade + '\'' +
+                ", valorAula=" + valorAula +
+                ", avAlunos=" + avAlunos +
+                ", agenda=" + agenda +
+                ", listaClientes=" + listaClientes +
+                ", historicoAvaliacoes=" + historicoAvaliacoes +
+                "} " + super.toString();
+
+    }
+    public void verPerfilProf(){
+    System.out.println("\n=== PERFIL PROFISSIONAL ===");
+        System.out.println("Nome: " + getNome());
+        System.out.println("Email: " + getEmail());
+        System.out.println("Telefone: " + getTelefone());
+        System.out.println("CPF: " + getCpf());
+        System.out.println("Especialidade: " + this.especialidade);
+        System.out.println("Registro (CREF): " + this.numeroRegistro);
+        System.out.printf("Valor da Aula: R$ %.2f\n", this.valorAula);
+        System.out.println("Disponibilidade: " + (this.disponibilidade != null ? this.disponibilidade : "Não informada"));
+
+        int qtdAlunos = (listaClientes != null) ? listaClientes.size() : 0;
+        System.out.println("Alunos Vinculados: " + qtdAlunos);
+
+        if (this.avaliacao != null) {
+        System.out.println("Avaliação Média: " + this.avaliacao);
+    }
+        System.out.println("==============================\n");
+    }
 }
 
 

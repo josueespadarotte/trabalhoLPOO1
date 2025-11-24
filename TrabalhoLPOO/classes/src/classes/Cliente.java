@@ -14,7 +14,6 @@ public class Cliente extends Pessoa {
     private List<FichaTreino> fichasTreino = new ArrayList<>();
     private List<Agendamento> meusAgendamentos = new ArrayList<>();
     private ArrayList<Double> medidas = new ArrayList<>();
-    // Usando a classe interna que você criou em Pessoa
     public ArrayList<Pessoa.exercicies> carga = new ArrayList<>();
     private List<String> historicoMedidas = new ArrayList<>();
     private List<Avaliacao> listaAvaliacoes = new ArrayList<>();
@@ -29,7 +28,7 @@ public class Cliente extends Pessoa {
         this.restricaoFisica = restricaoFisica;
     }
 
-    public Cliente(int id, String nome, String cpf, String telefone, String email, String senha, String sexo,
+public Cliente(int id, String nome, String cpf, String telefone, String email, String senha, String sexo,
                    int idade, double peso, double altura, String objetivo) {
         super(id, nome, cpf, telefone, email, senha, sexo);
         this.idade = idade;
@@ -39,13 +38,42 @@ public class Cliente extends Pessoa {
         this.restricaoFisica = "Nenhuma";
     }
 
-    // --- MÉTODOS CORRIGIDOS ---
-
-    // Agora salva o exercício na lista 'carga'
     public void registrarCarga(String nome, double peso, int reps) {
-        Pessoa.exercicies novoExercicio = new Pessoa(0,"","","","","","").new exercicies(nome, peso, reps);
+        // A sintaxe se torna mais limpa dentro da subclasse
+        Pessoa.exercicies novoExercicio = this.new exercicies(nome, peso, reps);
         this.carga.add(novoExercicio);
-        System.out.println("Exercício " + nome + " registrado com " + peso + "kg.");
+        System.out.println("✅ Exercício " + nome + " registrado com " + peso + "kg.");
+    }
+
+
+    public void removerCarga(int posicao) {
+        if (this.carga.isEmpty()) {
+            System.out.println(" Sua ficha de treino está vazia. Nada para remover.");
+            return;
+        }
+        if (posicao >= 0 && posicao < this.carga.size()) {
+            String nomeExercicio = this.carga.get(posicao).getNomeex();
+            this.carga.remove(posicao);
+
+            System.out.println(" Exercício '" + nomeExercicio + "' na posição [" + posicao + "] removido da ficha de treino.");
+        } else {
+            int ultimoIndice = this.carga.size() - 1;
+            System.out.println(" Erro: Posição inválida (" + posicao + "). Digite um número entre 0 e " + ultimoIndice + ".");
+        }
+    }
+    public void listarCargaComIndices() {
+        System.out.println("\n=== EXERCÍCIOS CADASTRADOS DE " + this.getNome() + " ===");
+        if (this.carga.isEmpty()) {
+            System.out.println("Não há exercícios cadastrados na sua ficha.");
+            return;
+        }
+
+        int indice = 0;
+        for (Pessoa.exercicies ex : this.carga) {
+            System.out.println("[" + indice + "] - " + ex.getNomeex() + " | Peso: " + ex.getPesoex() + "kg | Reps: " + ex.getReps());
+            indice++;
+        }
+        System.out.println("=========================================================");
     }
 
     // Corrigido: Agora salva uma String legível no histórico, não a soma dos valores
@@ -54,7 +82,6 @@ public class Cliente extends Pessoa {
         this.altura = altura;
         String registro = "Peso: " + peso + "kg | Braço: " + braco + "cm | Cintura: " + cintura + "cm";
         this.historicoMedidas.add(registro);
-        // Também adiciona na lista numérica se precisar de gráfico depois
         medidas.add(peso);
     }
 
@@ -81,15 +108,24 @@ public class Cliente extends Pessoa {
         }
     }
 
-    // --- GETTERS E OUTROS MÉTODOS ORIGINAIS ---
-    public String getNome() { return super.getNome(); }
-    public List<FichaTreino> getFichasTreino() { return fichasTreino; }
+    public String getNome() {
+        return super.getNome();
+    }
+    public List<FichaTreino> getFichasTreino() {
+        return fichasTreino; }
 
-    public void verProgresso() {
-        System.out.println("=== Histórico ===");
-        for(String m : historicoMedidas) {
-            System.out.println(m);
-        }
+    public void verPerfilAluno() {
+        System.out.println("\n=== PERFIL DO ALUNO ===");
+        System.out.println("Nome: " + getNome());
+        System.out.println("Email: " + getEmail());
+        System.out.println("Telefone: " + getTelefone());
+        System.out.println("CPF: " + getCpf());
+        System.out.println("Idade: " + this.idade + " anos");
+        System.out.println("Peso: " + this.peso + " kg");
+        System.out.println("Altura: " + this.altura + " m");
+        System.out.println("Objetivo: " + this.objetivo);
+        System.out.println("Restrição Física: " + (this.restricaoFisica != null ? this.restricaoFisica : "Nenhuma"));
+        System.out.println("------------------------------");
     }
 
     // Mantive o método original getMedida
@@ -97,7 +133,6 @@ public class Cliente extends Pessoa {
         return "Medidas atuais registradas: " + medidas.size();
     }
 
-    // ... restante dos seus métodos (agendamento, etc) ...
     public void visualizarFichaTreino() {
         if(fichasTreino.isEmpty()){
             System.out.println("Sem fichas.");
@@ -113,7 +148,6 @@ public class Cliente extends Pessoa {
         return "ID: " + getId() + " | Nome: " + getNome();
     }
 
-    // Adicione este método dentro da classe Cliente
     public boolean solicitarAgendamento(Profissional personal, Agendamento novoAgendamento) {
         // 1. Valida se os objetos não são nulos
         if (personal == null || novoAgendamento == null) {
@@ -121,14 +155,11 @@ public class Cliente extends Pessoa {
             return false;
         }
 
-        // 2. Tenta marcar na agenda do profissional (ele verifica disponibilidade lá)
-        // Passamos 'this' porque 'this' é o próprio Cliente que está chamando o método
         boolean conseguiuAgendar = personal.marcarHr(this, novoAgendamento);
 
-        // 3. Se o profissional confirmou, salvamos na lista do cliente também
         if (conseguiuAgendar) {
             this.meusAgendamentos.add(novoAgendamento);
-            System.out.println("Agendamento confirmado e salvo no seu histórico!");
+            System.out.println("Agendamento salvo no seu histórico!");
             return true;
         } else {
             System.out.println("Não foi possível realizar o agendamento (Horário indisponível ou erro).");

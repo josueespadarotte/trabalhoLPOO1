@@ -9,7 +9,7 @@ public class Pessoa {
     private String senha;
     private String sexo;
 
-    public class exercicies{
+    public  class exercicies{
         private String nomeex;
         private double pesoex;
         private int reps;
@@ -17,6 +17,18 @@ public class Pessoa {
             this.nomeex = nomeex;
             this.pesoex = pesoex;
             this.reps = reps;
+        }
+
+        public String getNomeex() {
+            return nomeex;
+        }
+
+        public String getPesoex() {
+            return pesoex + "";
+        }
+
+        public String getReps() {
+            return reps + "";
         }
     }
     public Pessoa(Integer id, String nome, String cpf, String telefone, String email, String senha, String sexo) {
@@ -83,39 +95,18 @@ public class Pessoa {
 
     public void setSexo(String sexo) {
         this.sexo = sexo;
-    }
 
-    // metodos
-    public void atualizarDados(String novoNome, String novoEmail, String novoTelefone) {
-        if (novoNome != null && !novoNome.isEmpty()) {
-            this.nome = novoNome;
-            System.out.println("Nome atualizado.");
-        }
-        if (novoEmail != null && !novoEmail.isEmpty()) {
-            this.email = novoEmail;
-            System.out.println("Email atualizado.");
-        }
-        if (novoTelefone != null && !novoTelefone.isEmpty()) {
-            if (novoTelefone.matches("\\d+")) {
-                this.telefone = novoTelefone;
-                System.out.println("Telefone atualizado.");
-            } else {
-                System.out.println("Erro: Telefone deve conter apenas números.");
-            }
-        }
     }
     public boolean verificarSenha(String senhaInput) {
         return this.senha != null && this.senha.equals(senhaInput);
     }
 
     public void alterarSenha(String novaSenha) {
-        if (novaSenha != null && novaSenha.length() >= 4) { // Exemplo de validação simples
+        if (novaSenha != null && novaSenha.length() >= 4) {
             this.senha = novaSenha;
             System.out.println("Senha alterada com sucesso.");
         } else {
             System.out.println("A senha deve ter pelo menos 4 caracteres.");
         }
     }
-
-
 }
