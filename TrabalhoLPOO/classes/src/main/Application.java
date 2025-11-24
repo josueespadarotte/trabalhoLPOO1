@@ -17,11 +17,11 @@ public class Application {
         ArrayList<Pessoa.exercicies> listaexercicio = new ArrayList<>();
         List<Pessoa> cadastros = new ArrayList<>();
 
-        Profissional personal = new Profissional(1221, "Dr.Davi Brito", "726394860032", "27999362832",
+        Profissional personal = new Profissional(1221, "Dr.Davi ", "726394860032", "27999362832",
                 "Davibrito_0@gmail.com", "5382", "M", "fisioterapeuta", 4342342);
 
         Cliente cliente= new Cliente(213, "Andrea Horta", "123.456.789-00", "1231123554",
-                "andrea@email.com", "senha123", "F", 30, 65.5, 1.65,
+                "1", "2", "F", 30, 65.5, 1.65,
                 "Hipertrofia", "Nenhuma");
 
         personal.cadastrarCliente(cliente);
@@ -78,52 +78,65 @@ public class Application {
                                         case 1: // Agendar Personal
                                             System.out.println("=== AGENDAMENTO ===");
 
-                                            // 1. Listar apenas os personais disponíveis para facilitar
+                                            // 1. Listar Personais com ID para o usuário saber qual escolher
                                             System.out.println("Personais disponíveis:");
                                             boolean temPersonal = false;
                                             for (Pessoa x : cadastros) {
                                                 if (x instanceof Profissional) {
-                                                    System.out.println(x.getNome());
+                                                    // Mostra o ID e o Nome
+                                                    System.out.println("ID: " + x.getId() + " | Nome: " + x.getNome());
                                                     temPersonal = true;
                                                 }
                                             }
+
                                             if (!temPersonal) {
                                                 System.out.println("Não há personais cadastrados no sistema.");
                                                 break;
                                             }
-                                            // 2. Pedir o nome do personal
-                                            System.out.println("\nCom qual personal deseja agendar? (Digite o nome exato)");
-                                            // Use nextLine() se o nome tiver sobrenome, mas lembre de limpar o buffer antes se necessário
-                                            String nomeBusca = sc.next();
-                                            // 3. Procurar o profissional na lista de CADASTROS
+
+                                            // 2. Pedir o ID (Alteração aqui)
+                                            System.out.print("\nDigite o ID do personal que deseja agendar: ");
+                                            int idBusca = sc.nextInt();
+                                            sc.nextLine(); // LIMPEZA DE BUFFER OBRIGATÓRIA após ler número
+
+                                            // 3. Procurar pelo ID na lista
                                             Profissional personalEncontrado = null;
                                             for (Pessoa xy : cadastros) {
-                                                // Verifica se é Profissional E se o nome bate (ignorando maiúsculas/minúsculas)
-                                                if (xy instanceof Profissional && xy.getNome().equalsIgnoreCase(nomeBusca)) {
+                                                // Compara o ID digitado com o ID do cadastro
+                                                if (xy instanceof Profissional && xy.getId().equals(idBusca)) {
                                                     personalEncontrado = (Profissional) xy;
                                                     break;
                                                 }
                                             }
-                                            // 4. Se encontrou, pede os dados do agendamento
+
+                                            // 4. Se encontrou, prossegue com o agendamento
                                             if (personalEncontrado != null) {
                                                 System.out.println("Personal " + personalEncontrado.getNome() + " selecionado.");
+
                                                 System.out.print("Digite a Data (dd/mm/aaaa): ");
                                                 String data = sc.next();
+
                                                 System.out.print("Digite o Horário (ex: 14:00): ");
                                                 String horario = sc.next();
-                                                System.out.print("Tipo de Sessão (Treino/Avaliação): ");
-                                                String tipo = sc.next();
-                                                // Gerar ID aleatório
-                                                int idAgendamento = (int)(Math.random() * 10000);
 
-                                                // 6. Tentar agendar (usando o método do Cliente que chama o do Personal)
-                                                // O método solicitarAgendamento verifica disponibilidade e adiciona na lista
-                                                Agendamento sucesso = new Agendamento(data, horario, cliente, personal.getNome(), alunoLogado.getNome());
-                                                if (sucesso == null) {
-                                                    System.out.println("Falha: Horário indisponível ou erro no sistema.");
-                                                }
+                                                System.out.print("Tipo de Sessão (Treino/Avaliação): ");
+                                                sc.nextLine(); // Limpa buffer do next() anterior
+                                                String tipo = sc.nextLine();
+
+                                                // Cria o objeto Agendamento com os dados corretos
+                                                Agendamento novoAgendamento = new Agendamento(
+                                                        data,
+                                                        horario,
+                                                        alunoLogado, // Passa o aluno logado
+                                                        personalEncontrado.getNome(), // Passa o nome do personal encontrado
+                                                        tipo
+                                                );
+
+                                                // Chama o método de solicitar no cliente
+                                                alunoLogado.solicitarAgendamento(personalEncontrado, novoAgendamento);
+
                                             } else {
-                                                System.out.println("Personal não encontrado! Verifique o nome digitado.");
+                                                System.out.println("ID não encontrado! Tente novamente.");
                                             }
                                             break;
 

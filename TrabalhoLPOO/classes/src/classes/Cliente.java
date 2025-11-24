@@ -112,4 +112,27 @@ public class Cliente extends Pessoa {
     public String toString() {
         return "ID: " + getId() + " | Nome: " + getNome();
     }
+
+    // Adicione este método dentro da classe Cliente
+    public boolean solicitarAgendamento(Profissional personal, Agendamento novoAgendamento) {
+        // 1. Valida se os objetos não são nulos
+        if (personal == null || novoAgendamento == null) {
+            System.out.println("Erro: Personal ou Agendamento inválidos.");
+            return false;
+        }
+
+        // 2. Tenta marcar na agenda do profissional (ele verifica disponibilidade lá)
+        // Passamos 'this' porque 'this' é o próprio Cliente que está chamando o método
+        boolean conseguiuAgendar = personal.marcarHr(this, novoAgendamento);
+
+        // 3. Se o profissional confirmou, salvamos na lista do cliente também
+        if (conseguiuAgendar) {
+            this.meusAgendamentos.add(novoAgendamento);
+            System.out.println("Agendamento confirmado e salvo no seu histórico!");
+            return true;
+        } else {
+            System.out.println("Não foi possível realizar o agendamento (Horário indisponível ou erro).");
+            return false;
+        }
+    }
 }
