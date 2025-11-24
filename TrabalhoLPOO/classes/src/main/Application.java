@@ -350,6 +350,7 @@ public class Application {
 
                                         case 8:
                                             personalLogado.verPerfilProf();
+                                            break;
 
 
                                         case 0:
