@@ -171,7 +171,7 @@ public class Profissional extends Pessoa{
 
     public void listarClientes() {
         for (Cliente c : listaClientes) {
-            System.out.println(c.toString());
+            System.out.println(c);
         }
     }
 

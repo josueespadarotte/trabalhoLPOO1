@@ -13,13 +13,13 @@ public class Agendamento {
     private String data;
     private String horario;
     private Cliente cliente;
-    private Profissional personal;
+    private String personal;
     private String tipoSessao; // Treino, Avaliação, Consultoria
     private Status status;
 
-    public Agendamento(int id, String data, String horario, Cliente cliente, Profissional personal,
+    public Agendamento(String data, String horario, Cliente cliente, String personal,
                        String tipoSessao) {
-        this.id = id;
+
         this.data = data;
         this.horario = horario;
         this.cliente = cliente;
@@ -112,7 +112,7 @@ public class Agendamento {
         return cliente;
     }
 
-    public Profissional getPersonal() {
+    public String getPersonal() {
         return personal;
     }
 
