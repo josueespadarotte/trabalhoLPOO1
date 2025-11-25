@@ -390,7 +390,6 @@ public class Application {
                                                                 System.out.println("[" + i + "] " + ag.getData() + " - " + ag.getCliente().getNome());
                                                             }
                                                         }
-
                                                         int idCancel = sc.nextInt();
                                                         if (idCancel >= 0 && idCancel < agenda.size()) {
                                                             agenda.get(idCancel).cancelarAgendamento();
@@ -405,7 +404,6 @@ public class Application {
                                                         System.out.println("Nada para concluir.\n");
                                                     } else {
                                                         System.out.println("Digite o ID do agendamento CONCLUÍDO: ");
-
                                                         //listagem dos agendamentos
                                                         for (int i = 0; i < agenda.size(); i++) {
                                                             Agendamento ag = agenda.get(i);
@@ -414,7 +412,6 @@ public class Application {
                                                                 System.out.println("[" + i + "] " + ag.getData() + " - " + ag.getCliente().getNome());
                                                             }
                                                         }
-
                                                         try {
                                                             int idConcluir = sc.nextInt();
                                                             if (idConcluir >= 0 && idConcluir < agenda.size()) {
@@ -436,20 +433,17 @@ public class Application {
                                                         }
                                                     }
                                                     break;
-
                                                case 0:
                                                         break;
                                                     default:
                                                         System.out.println("Opção inválida.\n");
                                                 }
                                                 break;
-
                                                 case 6:
                                                     personalLogado.verPerfilProf();
                                                     break;
 
                                                 case 0:
-
                                                     System.out.println("\nSaindo...\n");
                                                     break;
 
@@ -470,7 +464,6 @@ public class Application {
                     System.out.println("\n===TELA DE CADASTRO====");
                     System.out.print("1. Aluno\n2. Personal Trainer");
                     System.out.println("\nEscolha a modalidade: ");
-
                     String modalidade = sc.next();
                     if (modalidade.equals("1") || modalidade.equals("2")) {
                     } else {
@@ -479,13 +472,11 @@ public class Application {
                     String nome;
                     do {
                         System.out.print("Digite seu nome: ");
-
                         nome = sc.next();
                         if (!Pessoa.validarNome(nome)) {
                             System.out.println("Erro: Nome inválido! Deve ter apenas letras. ");
                         }
                     } while (!Pessoa.validarNome(nome));
-
                     String cpf;
                     do {
                         System.out.print("Digite o CPF: ");
@@ -499,7 +490,6 @@ public class Application {
                         System.out.print("Digite seu Sexo (M/F): ");
                         sexo = sc.next().toUpperCase();
                     } while (!sexo.equals("M") && !sexo.equals("F"));
-
                     double valorAula = 0.0;
                     if (!modalidade.startsWith("1")) {
                         boolean valorValido = false;
@@ -518,7 +508,6 @@ public class Application {
                             }
                         }
                     }
-
                     System.out.print("Digite seu telefone: ");
                     String telefone = sc.next();
                     String email;
