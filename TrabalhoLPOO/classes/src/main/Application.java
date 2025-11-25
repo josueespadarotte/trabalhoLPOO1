@@ -3,7 +3,6 @@ package main;
 import classes.*;
 import classes.Pessoa;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,7 +39,7 @@ public class Application {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("===TELA DE LOGIN====");
+                    System.out.println("===Tela de Login====");
                     System.out.println("Digite seu email: ");
                     String emailLogin = sc.next();
                     System.out.println("Digite sua senha: ");
@@ -154,6 +153,7 @@ public class Application {
 
                                         case 2:
                                             try {
+                                                System.out.print("\n=== SEUS TREINOS ===\n");
                                                 alunoLogado.listarCargaComIndices();
                                             } catch (Exception e) {
                                                 System.out.println("Ficha vazia!\n");
@@ -277,7 +277,7 @@ public class Application {
                                         case 3:
                                             try {
                                                 personalLogado.visualizarAvaliacoesDosAlunos();
-                                            }catch (Exception e){
+                                            } catch (Exception e) {
                                                 System.out.println("Nenhuma avaliação feita\n");
                                             }
 
@@ -331,7 +331,7 @@ public class Application {
                                                     break;
 
                                                 case 0:
-                                                    System.out.println("Voltando...\n");
+                                                    System.out.println("\nVoltando...\n");
                                                     break;
 
                                                 default:
@@ -339,123 +339,124 @@ public class Application {
                                             }
                                             break;
 
-                                            case 5:
-                                                System.out.println("\n=== GERENCIAR AGENDA ===");
-                                                List<Agendamento> agenda = personal.getAgenda();
-                                                System.out.println("1. Visualizar/Confirmar Agendamentos Pendentes");
-                                                System.out.println("2. Cancelar Agendamento");
-                                                System.out.println("3. Concluir Agendamento");
-                                                System.out.println("0. Voltar");
-                                                System.out.print("Escolha: ");
+                                        case 5:
+                                            System.out.println("\n=== GERENCIAR AGENDA ===\n");
+                                            List<Agendamento> agenda = personal.getAgenda();
+                                            System.out.println("1. Visualizar/Confirmar Agendamentos Pendentes");
+                                            System.out.println("2. Cancelar Agendamento");
+                                            System.out.println("3. Concluir Agendamento");
+                                            System.out.println("0. Voltar");
+                                            System.out.print("Escolha: ");
 
-                                                int esc = sc.nextInt();
-                                                sc.nextLine(); // Limpa buffer
-                                                switch (esc) {
-                                                    case 1:
-                                                        if (agenda.isEmpty()) {
-                                                            System.out.println("Agenda vazia.");
-                                                        } else {
-                                                            System.out.println("\n===LISTA DE AGENDAMENTOS===");
-                                                            boolean temPendente = false;
-                                                            for (int i = 0; i < agenda.size(); i++) {
-                                                                Agendamento ag = agenda.get(i);
-                                                                System.out.println("ID [" + i + "] - Data: " + ag.getData() +
-                                                                        " | Hora: " + ag.getHorario() +
-                                                                        " | Aluno: " + ag.getCliente().getNome() +
-                                                                        " | Status: " + ag.getStatus());
+                                            int esc = sc.nextInt();
+                                            sc.nextLine();
+                                            switch (esc) {
+                                                case 1:
+                                                    if (agenda.isEmpty()) {
+                                                        System.out.println("Agenda vazia.");
+                                                    } else {
+                                                        System.out.println("\n===LISTA DE AGENDAMENTOS===");
+                                                        boolean temPendente = false;
+                                                        for (int i = 0; i < agenda.size(); i++) {
+                                                            Agendamento ag = agenda.get(i);
+                                                            System.out.println("ID [" + i + "] - Data: " + ag.getData() +
+                                                                    " | Hora: " + ag.getHorario() +
+                                                                    " | Aluno: " + ag.getCliente().getNome() +
+                                                                    " | Status: " + ag.getStatus());
 
-                                                                if(ag.getStatus() == Agendamento.Status.AGENDADO) {
-                                                                    temPendente = true;
-                                                                }
-                                                            }
-
-                                                            if (temPendente) {
-                                                                System.out.println("\nDeseja confirmar algum agendamento? (Digite o ID ou -1 para sair)");
-                                                                int idConfirma = sc.nextInt();
-                                                                if (idConfirma >= 0 && idConfirma < agenda.size()) {
-                                                                    Agendamento agSelecionado = agenda.get(idConfirma);
-                                                                    agSelecionado.confirmarAgendamento();
-                                                                    System.out.println("Agendamento confirmado com sucesso!\n");
-                                                                }
+                                                            if (ag.getStatus() == Agendamento.Status.AGENDADO) {
+                                                                temPendente = true;
                                                             }
                                                         }
-                                                        break;
 
-                                                    case 2: // CANCELAR
-                                                        if (agenda.isEmpty()) {
-                                                            System.out.println("Nada para cancelar.\n");
-                                                        } else {
-                                                            System.out.println("Digite o ID do agendamento para CANCELAR: ");
-                                                            for (int i = 0; i < agenda.size(); i++) {
-                                                                Agendamento ag = agenda.get(i);
-                                                                if (ag.getStatus() != Agendamento.Status.CANCELADO &&
-                                                                        ag.getStatus() != Agendamento.Status.CONCLUIDO) {
-                                                                    System.out.println("[" + i + "] " + ag.getData() + " - " + ag.getCliente().getNome());
-                                                                }
-                                                            }
-
-                                                            int idCancel = sc.nextInt();
-                                                            if (idCancel >= 0 && idCancel < agenda.size()) {
-                                                                agenda.get(idCancel).cancelarAgendamento();
-                                                                System.out.println("Agendamento cancelado.\n");
-                                                            } else {
-                                                                System.out.println("ID inválido.\n");
+                                                        if (temPendente) {
+                                                            System.out.println("\nDeseja confirmar algum agendamento? (Digite o ID ou -1 para sair)");
+                                                            int idConfirma = sc.nextInt();
+                                                            if (idConfirma >= 0 && idConfirma < agenda.size()) {
+                                                                Agendamento agSelecionado = agenda.get(idConfirma);
+                                                                agSelecionado.confirmarAgendamento();
+                                                                System.out.println("Agendamento confirmado com sucesso!\n");
                                                             }
                                                         }
-                                                        break;
+                                                    }
+                                                    break;
 
-                                                    case 3:
-                                                        if (agenda.isEmpty()) {
-                                                            System.out.println("Nada para concluir.\n");
-                                                        } else {
-                                                            System.out.println("Digite o ID do agendamento CONCLUÍDO (Aula dada): ");
-                                                            for (int i = 0; i < agenda.size(); i++) {
-                                                                Agendamento ag = agenda.get(i);
-                                                                // Só pode concluir o que está Confirmado
-                                                                if (ag.getStatus() == Agendamento.Status.CONFIRMADO) {
-                                                                    System.out.println("[" + i + "] " + ag.getData() + " - " + ag.getCliente().getNome());
-                                                                }
-                                                            }
-
-                                                            int idConcluir = sc.nextInt();
-                                                            if (idConcluir >= 0 && idConcluir < agenda.size()) {
-                                                                agenda.get(idConcluir).concluirAgendamento();
-                                                                System.out.println("Agendamento marcado como concluído!");
-                                                            } else {
-                                                                System.out.println("ID inválido.\n");
+                                                case 2: // CANCELAR
+                                                    if (agenda.isEmpty()) {
+                                                        System.out.println("Nada para cancelar.\n");
+                                                    } else {
+                                                        System.out.println("Digite o ID do agendamento para CANCELAR: ");
+                                                        for (int i = 0; i < agenda.size(); i++) {
+                                                            Agendamento ag = agenda.get(i);
+                                                            if (ag.getStatus() != Agendamento.Status.CANCELADO &&
+                                                                    ag.getStatus() != Agendamento.Status.CONCLUIDO) {
+                                                                System.out.println("[" + i + "] " + ag.getData() + " - " + ag.getCliente().getNome());
                                                             }
                                                         }
-                                                        break;
 
-                                                    case 0:
-                                                        break;
+                                                        int idCancel = sc.nextInt();
+                                                        if (idCancel >= 0 && idCancel < agenda.size()) {
+                                                            agenda.get(idCancel).cancelarAgendamento();
+                                                            System.out.println("Agendamento cancelado.\n");
+                                                        } else {
+                                                            System.out.println("ID inválido.\n");
+                                                        }
+                                                    }
+                                                    break;
 
-                                                    default:
-                                                        System.out.println("Opção inválida.\n");
-                                                }
-                                                break;
+                                                case 3:
+                                                    if (agenda.isEmpty()) {
+                                                        System.out.println("Nada para concluir.\n");
+                                                    } else {
+                                                        
+                                                        System.out.println("Digite o ID do agendamento CONCLUÍDO (Aula dada): ");
+                                                        for (int i = 0; i < agenda.size(); i++) {
+                                                            Agendamento ag = agenda.get(i);
+                                                            // Só pode concluir o que está Confirmado
+                                                            if (ag.getStatus() == Agendamento.Status.CONFIRMADO) {
+                                                                System.out.println("[" + i + "] " + ag.getData() + " - " + ag.getCliente().getNome());
+                                                            }
+                                                        }
+
+                                                        int idConcluir = sc.nextInt();
+                                                        if (idConcluir >= 0 && idConcluir < agenda.size()) {
+                                                            agenda.get(idConcluir).concluirAgendamento();
+                                                            System.out.println("Agendamento marcado como concluído!");
+                                                        } else {
+                                                            System.out.println("ID inválido.\n");
+                                                        }
+                                                    }
+                                                    break;
+
+                                                case 0:
+                                                    break;
+
+                                                default:
+                                                    System.out.println("Opção inválida.\n");
+                                            }
+                                            break;
 
                                         case 6:
                                             personalLogado.verPerfilProf();
                                             break;
 
                                         case 0:
-                                            System.out.println("Saindo...\n");
+
+                                            System.out.println("\nSaindo...\n");
                                             break;
 
                                         default:
                                             System.out.println("Opção inválida!\n");
                                     }
                                 } while (opcPersonal != 0);
+                                break;
                             }
-                            break;
                         }
+                        if (!loginRealizado) {
+                            System.out.println("Login Inválido: Email ou senha incorretos.\n");
+                        }
+                        break;
                     }
-                    if (!loginRealizado) {
-                        System.out.println("Login Inválido: Email ou senha incorretos.\n");
-                    }
-                    break;
-
                 case 2:
                     System.out.println("\n===TELA DE CADASTRO====");
                     System.out.print("1. Aluno\n" +

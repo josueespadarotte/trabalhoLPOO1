@@ -131,4 +131,26 @@ public class Pessoa {
             }
         }
     }
+    public static boolean validarNome(String nome) {
+        // Aceita apenas letras e espaços, e deve ser maior que 10 caracteres
+        return nome != null && nome.length() > 10 && nome.matches("^[a-zA-Z\\s]+$");
+    }
+
+    public static boolean validarCpf(String cpf) {
+        // Apenas números e exatamente 11 dígitos
+        return cpf != null && cpf.matches("\\d{11}");
+    }
+
+    public static boolean validarEmail(String email) {
+        // Regex padrão para email
+        return email != null && email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+    }
+
+    public static boolean validarPositivo(double valor) {
+        return valor > 0;
+    }
+
+    public static boolean validarPeso(double peso) {
+        return peso > 10;
+    }
 }
