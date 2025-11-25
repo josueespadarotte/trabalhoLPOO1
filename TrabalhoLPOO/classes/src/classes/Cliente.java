@@ -62,7 +62,7 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
         }
     }
     public void listarCargaComIndices() {
-        System.out.println("\n=== EXERCÍCIOS CADASTRADOS DE " + this.getNome() + " ===");
+        System.out.print("\n=== EXERCÍCIOS CADASTRADOS DE " + this.getNome() + " ===");
         if (this.carga.isEmpty()) {
             System.out.println("Não há exercícios cadastrados na sua ficha.");
             return;

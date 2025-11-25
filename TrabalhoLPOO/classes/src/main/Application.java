@@ -88,7 +88,7 @@ public class Application {
                                             }
 
                                             if (!temPersonal) {
-                                                System.out.println("\nNão há personais cadastrados no sistema.\n");
+                                                System.out.println("\nNão há personais cadastrados no sistema.");
                                                 break;
                                             }
 
@@ -154,8 +154,7 @@ public class Application {
 
                                         case 2:
                                             try {
-                                                System.out.println("\n=== SEUS TREINOS ===\n");
-                                                alunoLogado.visualizarFichaTreino();
+                                                alunoLogado.listarCargaComIndices();
                                             } catch (Exception e) {
                                                 System.out.println("Ficha vazia!\n");
                                             }
@@ -213,12 +212,12 @@ public class Application {
                                 do {
                                     System.out.println("\n===== MENU DO PERSONAL =====");
                                     System.out.println("1. Ver Alunos Cadastrados");
-                                    System.out.println("2. Criar ficha de treino");
+
                                     System.out.println("3. Atualizar Ficha de Treino");
-                                    System.out.println("5. Visualizar Avaliações de um Aluno");
-                                    System.out.println("6. Atualizar Perfil");
-                                    System.out.println("7. Gerenciar Agenda");
-                                    System.out.println("8. Visualizar Perfil");
+                                    System.out.println("4. Visualizar Avaliações de um Aluno");
+                                    System.out.println("5. Atualizar Perfil");
+                                    System.out.println("6. Gerenciar Agenda");
+                                    System.out.println("7. Visualizar Perfil");
                                     System.out.println("0. Sair");
                                     System.out.print("\nEscolha uma Opção: \n");
 
@@ -231,27 +230,6 @@ public class Application {
                                             break;
 
                                         case 2:
-                                            System.out.println("ID do aluno que deseja criar uma nova ficha: ");
-                                            int idAluno = sc.nextInt();
-                                            Cliente alunoFicha = personalLogado.buscarClienteId(idAluno);
-
-                                            if (alunoFicha != null) {
-                                                System.out.println("Digite o ID da nova ficha: ");
-                                                int idFicha = sc.nextInt();
-                                                System.out.println("Digite a descrição dos exercícios:");
-                                                sc.nextLine(); // limpar buffer
-
-                                                String exercicios = sc.nextLine();
-                                                FichaTreino novaFicha = new FichaTreino(idFicha, exercicios);
-                                                personalLogado.criarFichaTreino(alunoFicha, novaFicha);
-
-                                                System.out.println("Ficha criada com sucesso!\n");
-                                            } else {
-                                                System.out.println("Aluno não encontrado!\n");
-                                            }
-                                            break;
-
-                                        case 3:
                                             System.out.println("\nAtualizar ficha de qual aluno? Id:");
                                             int idAtualiza = sc.nextInt();
                                             // Correção da lógica de busca aqui
@@ -296,7 +274,7 @@ public class Application {
                                             }
                                             break;
 
-                                        case 4:
+                                        case 3:
                                             try {
                                                 personalLogado.visualizarAvaliacoesDosAlunos();
                                             }catch (Exception e){
@@ -304,7 +282,7 @@ public class Application {
                                             }
 
                                             break;
-                                        case 5: // ATUALIZAR PERFIL
+                                        case 4: // ATUALIZAR PERFIL
                                             System.out.println("\n=== ATUALIZAR PERFIL ===");
                                             System.out.println("1. Dados Pessoais (Nome, Telefone, Email)");
                                             System.out.println("2. Alterar Senha");
@@ -353,7 +331,7 @@ public class Application {
                                                     break;
 
                                                 case 0:
-                                                    System.out.println("\nVoltando...\n");
+                                                    System.out.println("Voltando...\n");
                                                     break;
 
                                                 default:
@@ -361,8 +339,8 @@ public class Application {
                                             }
                                             break;
 
-                                            case 6:
-                                                System.out.println("\n=== GERENCIAR AGENDA ===\n");
+                                            case 5:
+                                                System.out.println("\n=== GERENCIAR AGENDA ===");
                                                 List<Agendamento> agenda = personal.getAgenda();
                                                 System.out.println("1. Visualizar/Confirmar Agendamentos Pendentes");
                                                 System.out.println("2. Cancelar Agendamento");
@@ -457,12 +435,12 @@ public class Application {
                                                 }
                                                 break;
 
-                                        case 8:
+                                        case 6:
                                             personalLogado.verPerfilProf();
                                             break;
 
                                         case 0:
-                                            System.out.println("\nSaindo...\n");
+                                            System.out.println("Saindo...\n");
                                             break;
 
                                         default:
