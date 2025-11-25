@@ -91,7 +91,6 @@ public class Application {
                                                 break;
                                             }
 
-                                            // 2. Pedir o ID (Alteração aqui)
                                             System.out.print("\nDigite o ID do personal que deseja agendar: ");
                                             int idBusca = sc.nextInt();
                                             sc.nextLine();
@@ -111,13 +110,12 @@ public class Application {
                                                 int diasPorSemana = sc.nextInt();
                                                 sc.nextLine();
 
-                                                // Consideramos uma média de 4 semanas por mês
+                                                // considerando 4 semanas por mês
                                                 int totalAulasMensal = diasPorSemana * 4;
 
                                                 double valorMensal = personalEncontrado.calcularValorAula(totalAulasMensal); //
 
-                                                System.out.printf(">> Estimativa: Para %d dias na semana " +
-                                                                "(aprox. %d aulas/mês), o valor mensal será: R$ %.2f\n\n",
+                                                System.out.printf("O valor mensal será: R$ %.2f\n\n",
                                                         diasPorSemana, totalAulasMensal, valorMensal);
 
 
@@ -127,7 +125,6 @@ public class Application {
                                                 if (resposta.equalsIgnoreCase("S")) {
                                                     System.out.print("Digite a Data (dd/mm/aaaa): ");
                                                     String data = sc.next();
-                                                    // ... restante do código de agendamento que já existia ...
                                                     System.out.print("Digite o Horário (ex: 14:00): "); // gostaria de colocar lista de horario por exemplo 1 - 14:00...
                                                     String horario = sc.next();
                                                     System.out.print("Tipo de Sessão (Treino/Avaliação): ");
@@ -167,7 +164,7 @@ public class Application {
                                             double carga = sc.nextDouble();
                                             System.out.println("Repetições: ");
                                             int reps = sc.nextInt();
-                                            // Ajuste conforme seu método registrarCarga (se pedir reps, adicione)
+
                                             alunoLogado.registrarCarga(nomeEx, carga, reps);
                                             System.out.println("Carga registrada!");
                                             break;
@@ -257,7 +254,7 @@ public class Application {
                                                             case 2:
                                                                 clienteEncontrado.listarCargaComIndices(); // O usuário verá a lista numerada
 
-                                                                System.out.print("Digite o NÚMERO (posição) do exercício que deseja remover: ");
+                                                                System.out.print("Digite o NÚMERO do exercício que deseja remover: ");
                                                                 int indiceParaRemover = sc.nextInt();
 
                                                                 clienteEncontrado.removerCarga(indiceParaRemover);
@@ -268,7 +265,7 @@ public class Application {
                                                     } catch (Exception e) {
                                                         System.out.println("Erro ao atualizar ficha: \n" + e.getMessage());
                                                     }
-                                                } while (escolha != 3); // Alterado para sair no 3 (Voltar)
+                                                } while (escolha != 3);
                                             } else {
                                                 System.out.println("Aluno não encontrado na sua lista.\n");
                                             }
@@ -282,7 +279,7 @@ public class Application {
                                             }
 
                                             break;
-                                        case 4: // ATUALIZAR PERFIL
+                                        case 4:
                                             System.out.println("\n=== ATUALIZAR PERFIL ===");
                                             System.out.println("1. Dados Pessoais (Nome, Telefone, Email)");
                                             System.out.println("2. Alterar Senha");
@@ -290,10 +287,10 @@ public class Application {
                                             System.out.print("Escolha: ");
 
                                             int subOpc = sc.nextInt();
-                                            sc.nextLine(); // Limpa o buffer do teclado
+                                            sc.nextLine();
 
                                             switch (subOpc) {
-                                                case 1: // Dados Pessoais
+                                                case 1:
                                                     System.out.println("\n=== ATUALIZAR DADOS PESSOAIS ===");
                                                     System.out.println("(Pressione ENTER para manter o valor atual)");
 
@@ -312,14 +309,13 @@ public class Application {
                                                     String novoTelefone = sc.nextLine();
                                                     if (novoTelefone.isEmpty()) novoTelefone = personal.getTelefone();
 
-                                                    // Chama o método da classe pai (Pessoa)
                                                     personal.atualizarDados(novoNome, novoEmail, novoTelefone);
                                                     break;
 
-                                                case 2: // Alterar Senha (agora é a opção 2)
+                                                case 2:
                                                     System.out.println("\n=== ALTERAR SENHA ===");
                                                     System.out.print("Digite sua senha ATUAL: ");
-                                                    String senhaAtual = sc.next(); // next() pois senha geralmente não tem espaço
+                                                    String senhaAtual = sc.next();
 
                                                     if (personal.verificarSenha(senhaAtual)) {
                                                         System.out.print("Digite a NOVA senha: ");
@@ -331,7 +327,7 @@ public class Application {
                                                     break;
 
                                                 case 0:
-                                                    System.out.println("\nVoltando...\n");
+                                                    System.out.println("Voltando...\n");
                                                     break;
 
                                                 default:
@@ -340,7 +336,7 @@ public class Application {
                                             break;
 
                                         case 5:
-                                            System.out.println("\n=== GERENCIAR AGENDA ===\n");
+                                            System.out.println("\n=== GERENCIAR AGENDA ===");
                                             List<Agendamento> agenda = personal.getAgenda();
                                             System.out.println("1. Visualizar/Confirmar Agendamentos Pendentes");
                                             System.out.println("2. Cancelar Agendamento");
@@ -350,6 +346,7 @@ public class Application {
 
                                             int esc = sc.nextInt();
                                             sc.nextLine();
+
                                             switch (esc) {
                                                 case 1:
                                                     if (agenda.isEmpty()) {
@@ -370,7 +367,7 @@ public class Application {
                                                         }
 
                                                         if (temPendente) {
-                                                            System.out.println("\nDeseja confirmar algum agendamento? (Digite o ID ou -1 para sair)");
+                                                            System.out.println("\nDeseja confirmar algum agendamento? (Digite o ID ou -1 para sair): ");
                                                             int idConfirma = sc.nextInt();
                                                             if (idConfirma >= 0 && idConfirma < agenda.size()) {
                                                                 Agendamento agSelecionado = agenda.get(idConfirma);
@@ -380,8 +377,7 @@ public class Application {
                                                         }
                                                     }
                                                     break;
-
-                                                case 2: // CANCELAR
+                                                case 2:
                                                     if (agenda.isEmpty()) {
                                                         System.out.println("Nada para cancelar.\n");
                                                     } else {
@@ -403,116 +399,213 @@ public class Application {
                                                         }
                                                     }
                                                     break;
-
                                                 case 3:
                                                     if (agenda.isEmpty()) {
                                                         System.out.println("Nada para concluir.\n");
                                                     } else {
-                                                        
-                                                        System.out.println("Digite o ID do agendamento CONCLUÍDO (Aula dada): ");
+                                                        System.out.println("Digite o ID do agendamento CONCLUÍDO: ");
+
+                                                        //listagem dos agendamentos
                                                         for (int i = 0; i < agenda.size(); i++) {
                                                             Agendamento ag = agenda.get(i);
-                                                            // Só pode concluir o que está Confirmado
+                                                            // so pode concluir o que está Confirmado
                                                             if (ag.getStatus() == Agendamento.Status.CONFIRMADO) {
                                                                 System.out.println("[" + i + "] " + ag.getData() + " - " + ag.getCliente().getNome());
                                                             }
                                                         }
 
-                                                        int idConcluir = sc.nextInt();
-                                                        if (idConcluir >= 0 && idConcluir < agenda.size()) {
-                                                            agenda.get(idConcluir).concluirAgendamento();
-                                                            System.out.println("Agendamento marcado como concluído!");
-                                                        } else {
-                                                            System.out.println("ID inválido.\n");
+                                                        try {
+                                                            int idConcluir = sc.nextInt();
+                                                            if (idConcluir >= 0 && idConcluir < agenda.size()) {
+                                                                Agendamento agendamento = agenda.get(idConcluir);
+                                                                if (agendamento.getStatus() == Agendamento.Status.CONFIRMADO) {
+                                                                    agendamento.concluirAgendamento();
+                                                                    System.out.println("Agendamento marcado como concluído!");
+                                                                } else {
+                                                                    System.out.println("O agendamento [" + idConcluir + "] não está no status CONFIRMADO. Status atual: " + agendamento.getStatus());
+                                                                }
+                                                            } else {
+                                                                System.out.println("ID inválido. O número digitado está fora do intervalo permitido [0 a " + (agenda.size() - 1) + "].\n");
+                                                            }
+                                                        } catch (java.util.InputMismatchException e) {
+                                                            System.out.println("Erro: Entrada inválida. Por favor, digite um número inteiro.\n");
+                                                            sc.nextLine();
+                                                        } catch (IndexOutOfBoundsException e) {
+                                                            System.out.println("Erro interno: ID do agendamento fora dos limites da lista.");
                                                         }
                                                     }
                                                     break;
 
+                                               case 0:
+                                                        break;
+                                                    default:
+                                                        System.out.println("Opção inválida.\n");
+                                                }
+                                                break;
+
+                                                case 6:
+                                                    personalLogado.verPerfilProf();
+                                                    break;
+
                                                 case 0:
+
+                                                    System.out.println("\nSaindo...\n");
                                                     break;
 
                                                 default:
-                                                    System.out.println("Opção inválida.\n");
+                                                    System.out.println("Opção inválida!\n");
                                             }
-                                            break;
-
-                                        case 6:
-                                            personalLogado.verPerfilProf();
-                                            break;
-
-                                        case 0:
-
-                                            System.out.println("\nSaindo...\n");
-                                            break;
-
-                                        default:
-                                            System.out.println("Opção inválida!\n");
                                     }
-                                } while (opcPersonal != 0);
-                                break;
+                                    while (opcPersonal != 0) ;
+                                    break;
+                                }
                             }
+                            if (!loginRealizado) {
+                                System.out.println("Login Inválido: Email ou senha incorretos.\n");
+                            }
+                            break;
                         }
-                        if (!loginRealizado) {
-                            System.out.println("Login Inválido: Email ou senha incorretos.\n");
-                        }
-                        break;
-                    }
+
                 case 2:
                     System.out.println("\n===TELA DE CADASTRO====");
-                    System.out.print("1. Aluno\n" +
-                            "2. Personal Trainer");
+                    System.out.print("1. Aluno\n2. Personal Trainer");
                     System.out.println("\nEscolha a modalidade: ");
-
                     String modalidade = sc.next().toLowerCase();
-                    System.out.print("=====TELA DE CADASTRO=====\n" + "Digite seu nome: ");
-                    String nome = sc.next();
-                    System.out.print("Digite o cpf(apenas números): ");
-                    String cpf = sc.next();
-                    System.out.println("digite seu Sexo(M/F): ");
-                    String sexo = sc.next();
-                    System.out.print("Valor da Hora/Aula: ");
-                    double valorAula = sc.nextDouble();
                     sc.nextLine();
+
+                    String nome;
+                    do {
+                        System.out.print("Digite seu nome: ");
+                        nome = sc.nextLine();
+                        if (!Pessoa.validarNome(nome)) {
+                            System.out.println("Erro: Nome inválido! Deve ter apenas letras. ");
+                        }
+                    } while (!Pessoa.validarNome(nome));
+
+                    String cpf;
+                    do {
+                        System.out.print("Digite o CPF: ");
+                        cpf = sc.next();
+                        if (!Pessoa.validarCpf(cpf)) {
+                            System.out.println("Erro: CPF inválido.");
+                        }
+                    } while (!Pessoa.validarCpf(cpf));
+                    String sexo;
+                    do {
+                        System.out.println("Digite seu Sexo (M/F): ");
+                        sexo = sc.next();
+                        sexo = sc.nextLine().trim().toUpperCase();
+                        if (!sexo.equals("M") && !sexo.equals("F")) {
+                            System.out.println("Sexo inválido!\nDigite 'M' ou 'F'.");
+                        }
+                    } while (!sexo.equals("M") && !sexo.equals("F"));
+
+                    double valorAula = 0.0;
+                    if (!modalidade.startsWith("1")) {
+                        boolean valorValido = false;
+                        while (!valorValido) {
+                            try {
+                                System.out.print("Valor da Hora/Aula: ");
+                                valorAula = sc.nextDouble();
+                                if (Pessoa.validarPositivo(valorAula)) {
+                                    valorValido = true;
+                                } else {
+                                    System.out.println("Erro: O valor deve ser positivo.");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Erro: Digite apenas números.");
+                                sc.next();
+                            }
+                        }
+                    }
+
                     System.out.print("Digite seu telefone: ");
                     String telefone = sc.next();
-                    System.out.print("Digite seu email: ");
-                    String email = sc.next();
+
+
+                    String email;
+                    do {
+                        System.out.print("Digite seu email: ");
+                        email = sc.next();
+                        if (!Pessoa.validarEmail(email)) {
+                            System.out.println("Erro: Formato de email inválido.");
+                        }
+                    } while (!Pessoa.validarEmail(email));
+
                     System.out.print("Digite sua senha: ");
                     String senha = sc.next();
 
                     int id = (int) (Math.random() * (9999 - 1111 + 1)) + 1111;
 
+                    // aluno
                     if (modalidade.charAt(0) == '1') {
                         System.out.println("Digite sua idade: ");
                         int idade = sc.nextInt();
-                        System.out.println("digite seu peso");
-                        double peso = sc.nextDouble();
-                        System.out.println("digite sua altura: ");
-                        double altura = sc.nextDouble();
-                        System.out.println("digite seu objetivo:  ");
-                        String objetivo = sc.next();
-                        System.out.println("Possui alguma restrição fisica?\n1-SIM\n2-NÃO");
-                        int choice = sc.nextInt();
 
-                        if (choice == 1) {
+                        double peso = 0;
+                        boolean pesoValido = false;
+                        while (!pesoValido) {
+                            try {
+                                System.out.print("Digite seu peso (kg): ");
+                                peso = sc.nextDouble();
+                                if (Pessoa.validarPeso(peso)) {
+                                    pesoValido = true;
+                                } else {
+                                    System.out.println("Erro: Peso deve ser maior que 10kg.");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Erro: Digite apenas números.");
+                                sc.next();
+                            }
+                        }
+
+
+                        double altura = 0;
+                        boolean alturaValida = false;
+                        while (!alturaValida) {
+                            try {
+                                System.out.print("Digite sua altura (m): ");
+                                altura = sc.nextDouble();
+                                if (Pessoa.validarPositivo(altura)) {
+                                    alturaValida = true;
+                                } else {
+                                    System.out.println("Erro: Altura deve ser positiva.");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Erro: Digite apenas números.");
+                                sc.next();
+                            }
+                        }
+
+                        System.out.println("Digite seu objetivo: ");
+                        sc.nextLine();
+                        String objetivo = sc.nextLine();
+
+                        System.out.println("Possui alguma restrição fisica?\n1-SIM\n2-NÃO");
+                        int escolha = sc.nextInt();
+
+                        if (escolha == 1) {
                             System.out.println("Qual: ");
-                            String restricaoFisica = sc.next();
+                            sc.nextLine();
+                            String restricaoFisica = sc.nextLine();
                             cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
                                     objetivo, restricaoFisica));
-                            System.out.println();
                         } else {
                             cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
                                     objetivo));
                         }
                     } else {
+                        // personal
                         System.out.print("Especialidade: ");
-                        String especialidade = sc.next();
                         sc.nextLine();
+                        String especialidade = sc.nextLine();
+
                         System.out.print("Número de registro: ");
                         int registro = sc.nextInt();
                         sc.nextLine();
+
                         cadastros.add(new Profissional(id, nome, cpf, telefone, email, senha, sexo, especialidade,
-                                registro, personal.getValorAula()));
+                                registro, valorAula));
                     }
                     System.out.println("Cadastrado com sucesso!\nSeja Bem Vindo!\n");
                     break;

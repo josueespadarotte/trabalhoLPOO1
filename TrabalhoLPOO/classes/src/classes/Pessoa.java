@@ -44,11 +44,6 @@ public class Pessoa {
         return id;
     }
 
-    public void setId() {
-        id = (int)(Math.random() * (9999 - 1111 + 1)) + 1111;
-
-    }
-
     public String getNome() {
         return nome;
     }
@@ -131,18 +126,21 @@ public class Pessoa {
             }
         }
     }
+
+    // métdos criados para diminuir a quantidade de while no main
+
     public static boolean validarNome(String nome) {
-        // Aceita apenas letras e espaços, e deve ser maior que 10 caracteres
-        return nome != null && nome.length() > 10 && nome.matches("^[a-zA-Z\\s]+$");
+        // Aceita apenas letras e deve ser maior que 3 letras
+        return nome != null && nome.length() > 3 && nome.matches("^[a-zA-Z\\s]+$");
     }
 
     public static boolean validarCpf(String cpf) {
-        // Apenas números e exatamente 11 dígitos
+        // Apenas números positivos e exatamente 11 dígitos
         return cpf != null && cpf.matches("\\d{11}");
     }
 
     public static boolean validarEmail(String email) {
-        // Regex padrão para email
+        // padrão email
         return email != null && email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
     }
 

@@ -20,12 +20,6 @@ public class FichaTreino {
     public String getExercicios() {
         return Exercicios;
     }
-    public void setExercicios(String Exercicios) {
-        this.Exercicios = Exercicios;
-    }
 
-    public void registrarCarga(String nomeExercicio, double cargaUsada){
-
-    }
 }
 

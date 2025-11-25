@@ -53,47 +53,9 @@ public class Agendamento {
         }
         this.status = Status.CONCLUIDO;
     }
-
-    public void editarAgendamento(String novaData, String novoHorario, String novoTipoSessao) {
-        if (this.status == Status.CANCELADO || this.status == Status.CONCLUIDO) {
-            System.out.println("Não é possível editar agendamento cancelado ou concluído.");
-            return;
-        }
-        this.data = novaData;
-        this.horario = novoHorario;
-        this.tipoSessao = novoTipoSessao;
-    }
-
-    //       MÉTODOS DE VALIDAÇÃO
-
-    public boolean verificarDisponibilidade() {
-        // Aqui você pode implementar checagem de conflito no banco de dados ou lista
-        return true; // por enquanto sempre disponível
-    }
-
-    public boolean validarHorario() {
-        // Implementar regras de horário (ex: horário comercial)
-        return true; // por enquanto válido
-    }
-
     // ===============================
     // MÉTODOS RELACIONADOS AO CLIENTE
     // ===============================
-
-    public void solicitarAgendamento(String data, String horario, String tipoSessao) {
-        this.data = data;
-        this.horario = horario;
-        this.tipoSessao = tipoSessao;
-        this.status = Status.AGENDADO;
-    }
-
-    public void cancelarAgendamento(int id) {
-        if (this.id == id) {
-            cancelarAgendamento();
-        } else {
-            System.out.println("ID do agendamento não corresponde.");
-        }
-    }
 
     //           GETTERS
     public int getId() {
