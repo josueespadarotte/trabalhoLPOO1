@@ -109,4 +109,26 @@ public class Pessoa {
             System.out.println("A senha deve ter pelo menos 4 caracteres.");
         }
     }
+
+    public void atualizarDados(String novoNome, String novoEmail, String novoTelefone) {
+        if (novoNome != null && !novoNome.isEmpty()) {
+            this.nome = novoNome;
+            System.out.println("Nome atualizado para: " + this.nome);
+        }
+
+        if (novoEmail != null && !novoEmail.isEmpty()) {
+            this.email = novoEmail;
+            System.out.println("Email atualizado para: " + this.email);
+        }
+
+        if (novoTelefone != null && !novoTelefone.isEmpty()) {
+            // Validação simples para aceitar apenas números
+            if (novoTelefone.matches("\\d+")) {
+                this.telefone = novoTelefone;
+                System.out.println("Telefone atualizado para: " + this.telefone);
+            } else {
+                System.out.println("Erro: O telefone deve conter apenas números. Alteração ignorada.");
+            }
+        }
+    }
 }

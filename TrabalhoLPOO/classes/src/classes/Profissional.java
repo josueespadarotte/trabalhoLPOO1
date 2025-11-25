@@ -12,7 +12,9 @@ public class Profissional extends Pessoa{
     private double valorAula;
 
     private List<Avaliacao> avAlunos;
-
+    public List<Agendamento> getAgenda() {
+        return this.agenda;
+    }
 
     public class exercicies{
         private String nomeex;
@@ -39,7 +41,7 @@ public class Profissional extends Pessoa{
     }
 
     public Profissional(Integer id, String nome, String cpf, String telefone, String email, String senha, String sexo,
-                        String especialidade, Integer numeroRegistro) {
+                        String especialidade, Integer numeroRegistro, double valorAula) {
         super(id, nome, cpf, telefone, email, senha, sexo);
         this.especialidade = especialidade;
         this.numeroRegistro = numeroRegistro;
@@ -149,9 +151,6 @@ public class Profissional extends Pessoa{
 
 
     // gestao de cliente
-
-
-
     public void registrarCarga(String nome, double peso, int reps){
         Pessoa.exercicies carga = new Pessoa.exercicies(nome, peso, reps);
     }

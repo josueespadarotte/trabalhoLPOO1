@@ -42,7 +42,7 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
         // A sintaxe se torna mais limpa dentro da subclasse
         Pessoa.exercicies novoExercicio = this.new exercicies(nome, peso, reps);
         this.carga.add(novoExercicio);
-        System.out.println("✅ Exercício " + nome + " registrado com " + peso + "kg.");
+        System.out.println(" Exercício " + nome + " registrado com " + peso + "kg.");
     }
 
 
