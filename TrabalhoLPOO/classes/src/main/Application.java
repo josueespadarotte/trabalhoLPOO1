@@ -4,6 +4,7 @@ import classes.*;
 import classes.Pessoa;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import classes.Agendamento;
@@ -427,7 +428,7 @@ public class Application {
                                                             } else {
                                                                 System.out.println("ID inválido. O número digitado está fora do intervalo permitido [0 a " + (agenda.size() - 1) + "].\n");
                                                             }
-                                                        } catch (java.util.InputMismatchException e) {
+                                                        } catch (InputMismatchException e) {
                                                             System.out.println("Erro: Entrada inválida. Por favor, digite um número inteiro.\n");
                                                             sc.nextLine();
                                                         } catch (IndexOutOfBoundsException e) {
@@ -478,8 +479,8 @@ public class Application {
                     String nome;
                     do {
                         System.out.print("Digite seu nome: ");
-                        sc.nextLine();
-                        nome = sc.nextLine();
+
+                        nome = sc.next();
                         if (!Pessoa.validarNome(nome)) {
                             System.out.println("Erro: Nome inválido! Deve ter apenas letras. ");
                         }
@@ -495,9 +496,8 @@ public class Application {
                     } while (!Pessoa.validarCpf(cpf));
                     String sexo;
                     do {
-                        System.out.println("Digite seu Sexo (M/F): ");
-                        sc.nextLine();
-                        sexo = sc.nextLine().toUpperCase();
+                        System.out.print("Digite seu Sexo (M/F): ");
+                        sexo = sc.next().toUpperCase();
                     } while (!sexo.equals("M") && !sexo.equals("F"));
 
                     double valorAula = 0.0;
@@ -521,8 +521,6 @@ public class Application {
 
                     System.out.print("Digite seu telefone: ");
                     String telefone = sc.next();
-
-
                     String email;
                     do {
                         System.out.print("Digite seu email: ");
@@ -578,24 +576,37 @@ public class Application {
                             System.out.println("Digite seu objetivo: ");
                             sc.nextLine();
                             String objetivo = sc.nextLine();
-
-                            System.out.println("Possui alguma restrição fisica?\n1-SIM\n2-NÃO\nOPÇÃO: ");
-                            try {
-                                int escolha = sc.nextInt();
-                                if (escolha == 1) {
-                                    System.out.println("Qual: ");
+                            int escolha = 0;
+                            boolean entradaValida = false;
+                            do {
+                                System.out.println("Possui alguma restrição fisica?\n1-SIM\n2-NÃO\nOPÇÃO: ");
+                                try {
+                                    escolha = sc.nextInt();
                                     sc.nextLine();
-                                    String restricaoFisica = sc.nextLine();
-                                    cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
-                                            objetivo, restricaoFisica));
-                                } else if (escolha == 2) {
-                                    cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
-                                            objetivo));
-                                } else {
-                                    System.out.println("Opção inválida");
+                                    if (escolha == 1 || escolha == 2) {
+                                        entradaValida = true;
+                                    } else {
+                                        System.out.println(" Opção inválida. Por favor, digite 1 ou 2.");
+                                        entradaValida = false;
+                                    }
+                                } catch (InputMismatchException e) {
+                                    System.out.println(" Opção inválida. Por favor, digite apenas números inteiros (1 ou 2).");
+                                    sc.nextLine();
+                                    entradaValida = false;
+                                } catch (Exception e) {
+                                    System.out.println(" Erro inesperado: " + e.getMessage());
+                                    entradaValida = true;
+                                    escolha = 0;
                                 }
-                            } catch (java.util.InputMismatchException e) {
-                                System.out.println("Opção inválida");
+                            } while (!entradaValida);
+                            if (escolha == 1) {
+                                System.out.print("Qual: ");
+                                String restricaoFisica = sc.nextLine();
+                                cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
+                                        objetivo, restricaoFisica));
+                            } else if (escolha == 2) {
+                                cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
+                                        objetivo));
                             }
                         } else {
                             // personal
@@ -612,7 +623,7 @@ public class Application {
                         }
                         System.out.println("Cadastrado com sucesso!\nSeja Bem Vindo!\n");
                         break;
-                    }catch (java.util.InputMismatchException e){
+                    }catch (InputMismatchException e){
                         System.out.println("Valor incorreto");
                     }
 
