@@ -465,17 +465,20 @@ public class Application {
                             }
                             break;
                         }
-
                 case 2:
                     System.out.println("\n===TELA DE CADASTRO====");
                     System.out.print("1. Aluno\n2. Personal Trainer");
                     System.out.println("\nEscolha a modalidade: ");
-                    String modalidade = sc.next().toLowerCase();
-                    sc.nextLine();
 
+                    String modalidade = sc.next();
+                    if (modalidade.equals("1") || modalidade.equals("2")) {
+                    } else {
+                        System.out.println("Opção inválida! Digite 1 ou 2.");
+                    }
                     String nome;
                     do {
                         System.out.print("Digite seu nome: ");
+                        sc.nextLine();
                         nome = sc.nextLine();
                         if (!Pessoa.validarNome(nome)) {
                             System.out.println("Erro: Nome inválido! Deve ter apenas letras. ");
@@ -493,11 +496,8 @@ public class Application {
                     String sexo;
                     do {
                         System.out.println("Digite seu Sexo (M/F): ");
-                        sexo = sc.next();
-                        sexo = sc.nextLine().trim().toUpperCase();
-                        if (!sexo.equals("M") && !sexo.equals("F")) {
-                            System.out.println("Sexo inválido!\nDigite 'M' ou 'F'.");
-                        }
+                        sc.nextLine();
+                        sexo = sc.nextLine().toUpperCase();
                     } while (!sexo.equals("M") && !sexo.equals("F"));
 
                     double valorAula = 0.0;
@@ -531,84 +531,90 @@ public class Application {
                             System.out.println("Erro: Formato de email inválido.");
                         }
                     } while (!Pessoa.validarEmail(email));
+                    try {
+                        System.out.print("Digite sua senha: ");
+                        String senha = sc.next();
 
-                    System.out.print("Digite sua senha: ");
-                    String senha = sc.next();
+                        int id = (int) (Math.random() * (9999 - 1111 + 1)) + 1111;
 
-                    int id = (int) (Math.random() * (9999 - 1111 + 1)) + 1111;
+                        // aluno
+                        if (modalidade.charAt(0) == '1') {
+                            System.out.println("Digite sua idade: ");
+                            int idade = sc.nextInt();
 
-                    // aluno
-                    if (modalidade.charAt(0) == '1') {
-                        System.out.println("Digite sua idade: ");
-                        int idade = sc.nextInt();
-
-                        double peso = 0;
-                        boolean pesoValido = false;
-                        while (!pesoValido) {
-                            try {
-                                System.out.print("Digite seu peso (kg): ");
-                                peso = sc.nextDouble();
-                                if (Pessoa.validarPeso(peso)) {
-                                    pesoValido = true;
-                                } else {
-                                    System.out.println("Erro: Peso deve ser maior que 10kg.");
+                            double peso = 0;
+                            boolean pesoValido = false;
+                            while (!pesoValido) {
+                                try {
+                                    System.out.print("Digite seu peso (kg): ");
+                                    peso = sc.nextDouble();
+                                    if (Pessoa.validarPeso(peso)) {
+                                        pesoValido = true;
+                                    } else {
+                                        System.out.println("Erro: Peso deve ser maior que 10kg.");
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("Erro: Digite apenas números.");
+                                    sc.next();
                                 }
-                            } catch (Exception e) {
-                                System.out.println("Erro: Digite apenas números.");
-                                sc.next();
                             }
-                        }
-
-
-                        double altura = 0;
-                        boolean alturaValida = false;
-                        while (!alturaValida) {
-                            try {
-                                System.out.print("Digite sua altura (m): ");
-                                altura = sc.nextDouble();
-                                if (Pessoa.validarPositivo(altura)) {
-                                    alturaValida = true;
-                                } else {
-                                    System.out.println("Erro: Altura deve ser positiva.");
+                            double altura = 0;
+                            boolean alturaValida = false;
+                            while (!alturaValida) {
+                                try {
+                                    System.out.print("Digite sua altura (m): ");
+                                    altura = sc.nextDouble();
+                                    if (Pessoa.validarPositivo(altura)) {
+                                        alturaValida = true;
+                                    } else {
+                                        System.out.println("Erro: Altura deve ser positiva.");
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("Erro: Digite apenas números.");
+                                    sc.next();
                                 }
-                            } catch (Exception e) {
-                                System.out.println("Erro: Digite apenas números.");
-                                sc.next();
                             }
-                        }
 
-                        System.out.println("Digite seu objetivo: ");
-                        sc.nextLine();
-                        String objetivo = sc.nextLine();
-
-                        System.out.println("Possui alguma restrição fisica?\n1-SIM\n2-NÃO");
-                        int escolha = sc.nextInt();
-
-                        if (escolha == 1) {
-                            System.out.println("Qual: ");
+                            System.out.println("Digite seu objetivo: ");
                             sc.nextLine();
-                            String restricaoFisica = sc.nextLine();
-                            cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
-                                    objetivo, restricaoFisica));
+                            String objetivo = sc.nextLine();
+
+                            System.out.println("Possui alguma restrição fisica?\n1-SIM\n2-NÃO\nOPÇÃO: ");
+                            try {
+                                int escolha = sc.nextInt();
+                                if (escolha == 1) {
+                                    System.out.println("Qual: ");
+                                    sc.nextLine();
+                                    String restricaoFisica = sc.nextLine();
+                                    cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
+                                            objetivo, restricaoFisica));
+                                } else if (escolha == 2) {
+                                    cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
+                                            objetivo));
+                                } else {
+                                    System.out.println("Opção inválida");
+                                }
+                            } catch (java.util.InputMismatchException e) {
+                                System.out.println("Opção inválida");
+                            }
                         } else {
-                            cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
-                                    objetivo));
+                            // personal
+                            System.out.print("Especialidade: ");
+                            sc.nextLine();
+                            String especialidade = sc.nextLine();
+
+                            System.out.print("Número de registro: ");
+                            int registro = sc.nextInt();
+                            sc.nextLine();
+
+                            cadastros.add(new Profissional(id, nome, cpf, telefone, email, senha, sexo, especialidade,
+                                    registro, valorAula));
                         }
-                    } else {
-                        // personal
-                        System.out.print("Especialidade: ");
-                        sc.nextLine();
-                        String especialidade = sc.nextLine();
-
-                        System.out.print("Número de registro: ");
-                        int registro = sc.nextInt();
-                        sc.nextLine();
-
-                        cadastros.add(new Profissional(id, nome, cpf, telefone, email, senha, sexo, especialidade,
-                                registro, valorAula));
+                        System.out.println("Cadastrado com sucesso!\nSeja Bem Vindo!\n");
+                        break;
+                    }catch (java.util.InputMismatchException e){
+                        System.out.println("Valor incorreto");
                     }
-                    System.out.println("Cadastrado com sucesso!\nSeja Bem Vindo!\n");
-                    break;
 
                 case 3:
                     System.out.println("Encerrando aplicação...\n");
