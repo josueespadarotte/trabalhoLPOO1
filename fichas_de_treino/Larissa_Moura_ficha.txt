@@ -1,0 +1,7 @@
+=== FICHA DE TREINO - Larissa Moura ===
+Objetivo: definição de pernas
+Restrição Física: Nenhuma
+----------------------------------------
+ombro | Peso: 8.0 | Reps: 3
+peito | Peso: 15.0 | Reps: 3
+Gluteo | Peso: 26.0 | Reps: 3
