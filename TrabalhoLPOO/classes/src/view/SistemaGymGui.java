@@ -23,7 +23,7 @@ public class SistemaGymGui extends JFrame {
     public static final String TELA_MENU_PERSONAL = "MENU_PERSONAL";
 
     public SistemaGymGui() {
-        super("Sistema de Academia - LPOO");
+        super("SistemaPersonal"); // Atualizado o título da janela também
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null);

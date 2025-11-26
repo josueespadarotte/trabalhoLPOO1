@@ -2,9 +2,6 @@ package classes;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
-import java.io.PrintWriter;
-import classes.Cliente;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 

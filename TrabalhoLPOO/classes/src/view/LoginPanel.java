@@ -22,7 +22,7 @@ public class LoginPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         //Título
-        JLabel lblTitulo = new JLabel("Bem-vindo ao GymSystem");
+        JLabel lblTitulo = new JLabel("Bem-vindo ao SistemaPersonal");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;

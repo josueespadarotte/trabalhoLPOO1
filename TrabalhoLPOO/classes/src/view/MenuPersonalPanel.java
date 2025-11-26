@@ -32,30 +32,34 @@ public class MenuPersonalPanel extends JPanel {
         header.add(lblBemVindo);
         add(header, BorderLayout.NORTH);
 
-        //grid de Botões
-        JPanel menuGrid = new JPanel(new GridLayout(2, 2, 15, 15));
+        // Grid de Botões (Ajustado para 2 linhas e 3 colunas para caber o novo botão)
+        JPanel menuGrid = new JPanel(new GridLayout(2, 3, 15, 15));
         menuGrid.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
         menuGrid.setBackground(Color.WHITE);
 
         JButton btnAlunos = criarBotaoMenu("Ver Alunos");
         JButton btnAgenda = criarBotaoMenu("Gerenciar Agenda");
-        JButton btnFicha = criarBotaoMenu("Criar Ficha de Treino"); // Novo botão
+        JButton btnFicha = criarBotaoMenu("Adicionar Exercício");
+        JButton btnExcluirExercicio = criarBotaoMenu("Excluir Exercício"); // Novo botão
         JButton btnPerfil = criarBotaoMenu("Meu Perfil");
         JButton btnSair = criarBotaoMenu("Sair");
 
-        //destaque para sair
+        //destaque para sair e excluir (cores de alerta/atenção)
+        btnExcluirExercicio.setForeground(new Color(178, 34, 34)); // Firebrick text
+
         btnSair.setBackground(new Color(220, 53, 69));
         btnSair.setForeground(Color.WHITE);
 
         menuGrid.add(btnAlunos);
         menuGrid.add(btnAgenda);
-        menuGrid.add(btnFicha); // Adicionado ao grid
+        menuGrid.add(btnFicha);
+        menuGrid.add(btnExcluirExercicio); // Adiciona ao grid
         menuGrid.add(btnPerfil);
         menuGrid.add(btnSair);
 
         add(menuGrid, BorderLayout.CENTER);
 
-
+        // AÇÕES DOS BOTÕES
 
         // ver Alunos
         btnAlunos.addActionListener(e -> listarAlunos());
@@ -63,8 +67,11 @@ public class MenuPersonalPanel extends JPanel {
         // gerenciar Agenda
         btnAgenda.addActionListener(e -> gerenciarAgenda());
 
-        //criar Ficha de Treino
-        btnFicha.addActionListener(e -> criarFichaTreino());
+        // Adicionar Exercício (antigo Criar Ficha)
+        btnFicha.addActionListener(e -> adicionarExercicioFicha());
+
+        // Excluir Exercício (NOVA FUNCIONALIDADE)
+        btnExcluirExercicio.addActionListener(e -> excluirExercicio());
 
         // Perfil
         btnPerfil.addActionListener(e -> {
@@ -87,16 +94,11 @@ public class MenuPersonalPanel extends JPanel {
         });
     }
 
-    // funcionalidades
+    // --- FUNCIONALIDADES ---
 
     private void listarAlunos() {
         // Obter lista de alunos cadastrados
-        List<Cliente> alunos = new ArrayList<>();
-        for (Pessoa p : frame.getCadastros()) {
-            if (p instanceof Cliente) {
-                alunos.add((Cliente) p);
-            }
-        }
+        List<Cliente> alunos = obterListaAlunos();
 
         if (alunos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhum aluno cadastrado no sistema.");
@@ -210,15 +212,9 @@ public class MenuPersonalPanel extends JPanel {
         dialog.setVisible(true);
     }
 
-    private void criarFichaTreino() {
+    private void adicionarExercicioFicha() {
         // selecionar Aluno
-        List<Cliente> alunos = new ArrayList<>();
-        for (Pessoa p : frame.getCadastros()) {
-            if (p instanceof Cliente) {
-                alunos.add((Cliente) p);
-            }
-        }
-
+        List<Cliente> alunos = obterListaAlunos();
         if (alunos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nenhum aluno cadastrado.");
             return;
@@ -267,6 +263,106 @@ public class MenuPersonalPanel extends JPanel {
                 }
             }
         }
+    }
+
+    // --- NOVA FUNÇÃO DE EXCLUIR ---
+    private void excluirExercicio() {
+        // 1. Selecionar Aluno
+        List<Cliente> alunos = obterListaAlunos();
+        if (alunos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum aluno cadastrado.");
+            return;
+        }
+
+        JComboBox<Cliente> cmbAlunos = new JComboBox<>(alunos.toArray(new Cliente[0]));
+        int resultAluno = JOptionPane.showConfirmDialog(this, cmbAlunos, "Selecione o Aluno para Remover Exercício", JOptionPane.OK_CANCEL_OPTION);
+
+        if (resultAluno == JOptionPane.OK_OPTION) {
+            Cliente alunoSelecionado = (Cliente) cmbAlunos.getSelectedItem();
+            if (alunoSelecionado == null) return;
+
+            if (alunoSelecionado.carga == null || alunoSelecionado.carga.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Este aluno não possui exercícios cadastrados.");
+                return;
+            }
+
+            // 2. Mostrar janela com tabela para exclusão
+            mostrarDialogoExclusao(alunoSelecionado);
+        }
+    }
+
+    private void mostrarDialogoExclusao(Cliente aluno) {
+        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Excluir Exercício - " + aluno.getNome(), true);
+        dialog.setLayout(new BorderLayout(10, 10));
+
+        // Tabela de Exercícios
+        String[] colunas = {"Exercício", "Carga (kg)", "Reps"};
+        DefaultTableModel model = new DefaultTableModel(colunas, 0);
+
+        // Função auxiliar para preencher a tabela
+        Runnable atualizarTabela = () -> {
+            model.setRowCount(0);
+            for (Pessoa.exercicies ex : aluno.carga) {
+                model.addRow(new Object[]{ex.getNomeex(), ex.getPesoex(), ex.getReps()});
+            }
+        };
+        atualizarTabela.run();
+
+        JTable tabela = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(tabela);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Selecione a linha para excluir"));
+        dialog.add(scrollPane, BorderLayout.CENTER);
+
+        // Botão de Excluir
+        JButton btnExcluir = new JButton("Excluir Selecionado");
+        btnExcluir.setBackground(new Color(220, 53, 69));
+        btnExcluir.setForeground(Color.WHITE);
+        btnExcluir.setFont(new Font("SansSerif", Font.BOLD, 12));
+
+        btnExcluir.addActionListener(e -> {
+            int row = tabela.getSelectedRow();
+            if (row != -1) {
+                // Confirmação
+                int confirm = JOptionPane.showConfirmDialog(dialog,
+                        "Tem certeza que deseja excluir o exercício selecionado?",
+                        "Confirmar Exclusão",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    // Remove da memória
+                    aluno.removerCarga(row);
+
+                    // Salva no arquivo TXT imediatamente
+                    personalLogado.salvarFichaTreinoEmTxt(aluno);
+
+                    // Atualiza a tabela visual
+                    atualizarTabela.run();
+
+                    JOptionPane.showMessageDialog(dialog, "Exercício excluído com sucesso!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(dialog, "Selecione um exercício na tabela para excluir.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        });
+
+        JPanel panelBtn = new JPanel();
+        panelBtn.add(btnExcluir);
+        dialog.add(panelBtn, BorderLayout.SOUTH);
+
+        dialog.setSize(500, 400);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+    // Método auxiliar para pegar lista de alunos
+    private List<Cliente> obterListaAlunos() {
+        List<Cliente> alunos = new ArrayList<>();
+        for (Pessoa p : frame.getCadastros()) {
+            if (p instanceof Cliente) {
+                alunos.add((Cliente) p);
+            }
+        }
+        return alunos;
     }
 
     private JButton criarBotaoMenu(String texto) {

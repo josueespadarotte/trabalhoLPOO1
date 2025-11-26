@@ -1,7 +1,6 @@
 package view;
 
 import classes.Cliente;
-import classes.Pessoa;
 import classes.Profissional;
 
 import javax.swing.*;
@@ -104,7 +103,7 @@ public class CadastroPanel extends JPanel {
         botPanel.add(btnSalvar);
         add(botPanel, BorderLayout.SOUTH);
 
-        //Listeners
+
         rbAluno.addActionListener(e -> cardLayoutEspecifico.show(cardPanelEspecifico, "ALUNO"));
         rbPersonal.addActionListener(e -> cardLayoutEspecifico.show(cardPanelEspecifico, "PERSONAL"));
 

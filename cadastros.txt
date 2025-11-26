@@ -1,4 +1,6 @@
 TIPO: PROFISSIONAL;ID: 1221;Nome: Dr.Davi;CPF: 726394860032;Tel: 27999362832;Email: 2;Senha: 3;Sexo: M;Espec: personal trainer;CREF: 4342342;Valor: 180.0
 TIPO: CLIENTE;ID: 213;Nome: Andrea Horta;CPF: 123.456.789-00;Tel: 1231123554;Email: 1;Senha: 2;Sexo: F;Idade: 30;Peso: 65.5;Altura: 1.65;Obj: Hipertrofia;Restricao: Nenhuma
-TIPO: CLIENTE;ID: 1335;Nome: victoria;CPF: 12312312315;Tel: 27999999999;Email: vic@gmail.com;Senha: v1234;Sexo: F;Idade: 20;Peso: 50.0;Altura: 160.0;Obj: gorda;Restricao: Nenhuma
-TIPO: PROFISSIONAL;ID: 9958;Nome: josue;CPF: 78945665421;Tel: 272154687456;Email: josue@gmail.com;Senha: j789;Sexo: M;Espec: alguma;CREF: 123;Valor: 150.0
+TIPO: CLIENTE;ID: 5538;Nome: Larissa Moura;CPF: 421.658.930-27 ;Tel: 98742-1630;Email: larissa.andrade@gmail.com;Senha: lari@12;Sexo: F;Idade: 32;Peso: 61.0;Altura: 165.0;Obj: definição de pernas;Restricao: Nenhuma
+TIPO: PROFISSIONAL;ID: 9247;Nome: Renato Alves;CPF: 103.927.584-60;Tel: 21996814428;Email: renato.figueira@gmail.com;Senha: rf1234;Sexo: M;Espec: Emagrecimento;CREF: 89234;Valor: 70.0
+TIPO: CLIENTE;ID: 4735;Nome: Mariana Silva;CPF: 529.184.670-92;Tel: 1198743-2165;Email: mariana.torres@gmail.com;Senha: mt45687@;Sexo: F;Idade: 24;Peso: 62.0;Altura: 165.0;Obj: definição ;Restricao: Nenhuma
+TIPO: PROFISSIONAL;ID: 8282;Nome: Camila Rocha;CPF: 590.327.814-01;Tel: 1199790-5620;Email: camila.ferraz.pt@gmail.com;Senha: py5454;Sexo: F;Espec: Treino funcional;CREF: 91201;Valor: 80.0

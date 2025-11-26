@@ -18,10 +18,10 @@ public class Application {
         List<Pessoa> cadastros = pessoaDAO.carregar();
 
         Profissional personal = new Profissional(1221, "Dr.Davi ", "726394860032", "27999362832",
-                "2", "3", "M", "personal trainer", 4342342, 180);
+                "davi@gmail.com", "d1234", "M", "personal trainer", 4342342, 180);
 
         Cliente cliente = new Cliente(213, "Andrea Horta", "123.456.789-00", "1231123554",
-                "1", "2", "F", 30, 65.5, 1.65,
+                "andrea@gmail.com", "a1234", "F", 30, 65.5, 1.65,
                 "Hipertrofia", "Nenhuma");
 
         if (cadastros instanceof ArrayList) {
