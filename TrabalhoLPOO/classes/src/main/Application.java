@@ -2,8 +2,7 @@ package main;
 
 import classes.*;
 import classes.Pessoa;
-
-
+import persistencia.PessoaDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,8 +11,16 @@ import classes.Agendamento;
 public class Application {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<Pessoa.exercicies> listaexercicio = new ArrayList<>();
-        List<Pessoa> cadastros = new ArrayList<>();
+        // Não é necessário inicializar as listas aqui
+        // ArrayList<Pessoa.exercicies> listaexercicio = new ArrayList<>();
+
+        // 1. Instancia o objeto de persistência (DAO)
+        PessoaDAO pessoaDAO = new PessoaDAO();
+
+        // 2. Carrega os dados (Substitui a inicialização manual da lista)
+        List<Pessoa> cadastros = pessoaDAO.carregar();
+
+        // Se a lista estiver vazia após carregar (primeiro uso), inicializa com dados de demonstração
 
         Profissional personal = new Profissional(1221, "Dr.Davi ", "726394860032", "27999362832",
                 "2", "3", "M", "personal trainer", 4342342, 180);
@@ -22,10 +29,12 @@ public class Application {
                 "1", "2", "F", 30, 65.5, 1.65,
                 "Hipertrofia", "Nenhuma");
 
-        personal.cadastrarCliente(cliente);
-
-        cadastros.add(personal);
-        cadastros.add(cliente);
+        // A lista precisa ser do tipo ArrayList ou similar para permitir .add()
+        if (cadastros instanceof ArrayList) {
+            cadastros.add(personal);
+            cadastros.add(cliente);
+            personal.cadastrarCliente(cliente); // Lógica de relacionamento
+        }
 
         System.out.println("===TELA DE LOGIN===");
         int opcao;
@@ -619,6 +628,7 @@ public class Application {
 
                 case 3:
                     System.out.println("Encerrando aplicação...\n");
+                    pessoaDAO.salvar(cadastros);
                     break;
 
                 default:

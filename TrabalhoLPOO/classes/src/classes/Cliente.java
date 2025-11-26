@@ -168,7 +168,7 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
     }
     public String toStringArquivo() {
         // Formato: C;ID;NOME;CPF;TELEFONE;EMAIL;SENHA;SEXO;IDADE;PESO;ALTURA;OBJETIVO;RESTRICAO
-        return "C;" +
+        return "A;" +
                 getId() + ";" +
                 getNome() + ";" +
                 getCpf() + ";" +
@@ -181,5 +181,45 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
                 this.altura + ";" +
                 this.objetivo + ";" +
                 (this.restricaoFisica != null ? this.restricaoFisica : "Nenhuma");
+    }
+
+    public String getObjetivo() {
+        return objetivo;
+    }
+
+    public void setObjetivo(String objetivo) {
+        this.objetivo = objetivo;
+    }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
+    }
+
+    public Double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Double peso) {
+        this.peso = peso;
+    }
+
+    public Double getAltura() {
+        return altura;
+    }
+
+    public void setAltura(Double altura) {
+        this.altura = altura;
+    }
+
+    public String getRestricaoFisica() {
+        return restricaoFisica;
+    }
+
+    public void setRestricaoFisica(String restricaoFisica) {
+        this.restricaoFisica = restricaoFisica;
     }
 }
