@@ -1,5 +1,7 @@
 package classes;
-
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -183,6 +185,29 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
                 (this.restricaoFisica != null ? this.restricaoFisica : "Nenhuma");
     }
 
+    public void lerFichaTreinoDoArquivo() {
+        // Recria o nome do arquivo exatamente como foi salvo (pasta/nome_sanitizado_ficha.txt)
+        String nomeSanitizado = getNome().replaceAll("\\s+", "_");
+        String nomeArquivo = "fichas_de_treino/" + nomeSanitizado + "_ficha.txt";
+
+        System.out.println("\n=== FICHA DE TREINO DE " + getNome().toUpperCase() + " ===");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(nomeArquivo))) {
+            String linha;
+            // Lê e imprime cada linha do arquivo
+            while ((linha = reader.readLine()) != null) {
+                System.out.println(linha);
+            }
+        } catch (IOException e) {
+            // Trata o erro se o arquivo não existir (ou outro erro de leitura)
+            if (e.getMessage().contains("No such file or directory") || e.getMessage().contains("O sistema não pode encontrar o arquivo especificado")) {
+                System.out.println("❌ Erro: Ficha de treino ainda não foi criada ou o arquivo foi movido.");
+            } else {
+                System.err.println("Erro ao ler a ficha de treino: " + e.getMessage());
+            }
+        }
+        System.out.println("=========================================\n");
+    }
     public String getObjetivo() {
         return objetivo;
     }

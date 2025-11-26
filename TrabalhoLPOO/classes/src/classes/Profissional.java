@@ -1,6 +1,7 @@
 package classes;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
 import java.io.PrintWriter;
 import classes.Cliente;
 import java.text.SimpleDateFormat;
@@ -244,40 +245,52 @@ public class Profissional extends Pessoa{
     }
 
     public void salvarFichaTreinoEmTxt(Cliente aluno) {
-        if (aluno.carga.isEmpty()) {
-            System.out.println("A ficha de treino do(a) aluno(a) " + aluno.getNome() + " está vazia. Nada para salvar.");
-            return;
-        }
+        // 1. Define o nome da pasta
+        String nomePasta = "fichas_de_treino";
 
-        // Cria o nome do arquivo, substituindo espaços no nome do cliente por underscore
-        String nomeArquivo = "ficha_treino_" + aluno.getNome().replaceAll("\\s+", "_") + ".txt";
+        // 2. Define o caminho do arquivo, incluindo o nome da pasta e do cliente
+        String nomeArquivo = nomePasta + "/" + aluno.getNome().replaceAll("\\s+", "_") + "_ficha.txt";
 
-        // Usando try-with-resources para garantir que o arquivo seja fechado
-        try (PrintWriter writer = new PrintWriter(new FileWriter(nomeArquivo))) {
+        try {
+            // 3. Cria o objeto File para a pasta
+            File pasta = new File(nomePasta);
 
-            writer.println("=== FICHA DE TREINO DE " + aluno.getNome().toUpperCase() + " ===");
-            writer.println("Objetivo: " + aluno.getObjetivo());
-            writer.println("-------------------------------------------------");
-
-            // Cabeçalho da tabela de exercícios
-            writer.println(String.format("%-25s | %-12s | %-5s", "EXERCÍCIO", "PESO (KG)", "REPS"));
-            writer.println("-------------------------------------------------");
-
-            // Itera sobre a lista de exercícios do cliente e escreve no arquivo
-            for (Pessoa.exercicies exercicio : aluno.carga) {
-                String nomeEx = exercicio.getNomeex();
-                String pesoEx = exercicio.getPesoex();
-                String repsEx = exercicio.getReps();
-
-                // Formata o exercício em colunas
-                writer.println(String.format("%-25s | %-12s | %-5s", nomeEx, pesoEx, repsEx));
+            // 4. Verifica se a pasta existe. Se não existir, tenta criá-la.
+            if (!pasta.exists()) {
+                if (pasta.mkdirs()) {
+                    System.out.println("Diretório criado: " + nomePasta);
+                } else {
+                    System.out.println("Erro ao criar o diretório: " + nomePasta);
+                    return; // Aborta o salvamento se não conseguir criar a pasta
+                }
             }
 
-            writer.println("-------------------------------------------------");
-            System.out.println("\uD83D\uDCC4 Ficha de treino de " + aluno.getNome() + " salva com sucesso em: " + nomeArquivo);
+            // 5. Usa o caminho completo para criar o FileWriter
+            FileWriter writer = new FileWriter(nomeArquivo);
+
+            // O restante do seu código de escrita no arquivo (que já estava funcionando)
+            writer.write("=== FICHA DE TREINO - " + aluno.getNome() + " ===\n");
+            writer.write("Objetivo: " + aluno.getObjetivo() + "\n");
+            writer.write("Restrição Física: " + aluno.getRestricaoFisica() + "\n");
+            writer.write("----------------------------------------\n");
+
+            if (aluno.carga.isEmpty()) {
+                writer.write("Nenhum exercício cadastrado.");
+            } else {
+                for (Pessoa.exercicies exercicio : aluno.carga) {
+                    // Supondo que 'exercicio.imprimirList()' retorna o formato desejado
+                    writer.write(exercicio.getNomeex() +
+                            " | Peso: " + exercicio.getPesoex() +
+                            " | Reps: " + exercicio.getReps() + "\n");
+                }
+            }
+
+            writer.close();
+            System.out.println("✅ Ficha de treino de " + aluno.getNome() + " salva com sucesso em: " + nomeArquivo);
 
         } catch (IOException e) {
-            System.out.println("\uD83D\uDED1 Erro ao salvar o arquivo: " + e.getMessage());
+            System.err.println("Erro ao salvar a ficha de treino: " + e.getMessage());
+            // e.printStackTrace(); // Descomente para ver detalhes do erro
         }
     }
     @Override

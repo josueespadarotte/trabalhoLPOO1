@@ -163,7 +163,7 @@ public class Application {
 
                                         case 2:
                                             try {
-                                                alunoLogado.listarCargaComIndices();
+                                                alunoLogado.lerFichaTreinoDoArquivo();
                                             } catch (Exception e) {
                                                 System.out.println("Ficha vazia!\n");
                                             }
@@ -179,6 +179,8 @@ public class Application {
                                             // Ajuste conforme seu método registrarCarga (se pedir reps, adicione)
                                             alunoLogado.registrarCarga(nomeEx, carga, reps);
                                             System.out.println("Carga registrada!");
+                                            Cliente clienteParaSalvar = alunoLogado;
+                                            personal.salvarFichaTreinoEmTxt(clienteParaSalvar);
                                             break;
 
                                         case 4:
