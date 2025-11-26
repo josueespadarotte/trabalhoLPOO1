@@ -16,9 +16,7 @@ public class PessoaDAO {
     private final String NOME_ARQUIVO = "cadastros.txt";
     private final String DELIMITADOR = ";";
 
-    /**
-     * Salva a lista de cadastros no arquivo de texto.
-     * @param cadastros A lista de Pessoa (Cliente e Profissional) a ser salva.
+    /*lista com nomes e atributos de todos os cadastros do sistema
      */
     public void salvar(List<Pessoa> cadastros) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(NOME_ARQUIVO))) {
@@ -35,10 +33,7 @@ public class PessoaDAO {
         }
     }
 
-    /*
-     Carrega a lista de cadastros do arquivo de texto.
-     retorna Uma lista de Pessoa (Cliente e Profissional) carregada do arquivo.
-     */
+
     public List<Pessoa> carregar() {
         List<Pessoa> cadastrosCarregados = new ArrayList<>();
         // Tenta criar o arquivo se ele não existir
@@ -57,25 +52,44 @@ public class PessoaDAO {
         return cadastrosCarregados;
     }
 
-    // metodos p auxilio da formatação
+    // metodos auxiliares de formatação
+    private String extrairValor(String dadoComRotulo) {
+        if (dadoComRotulo != null && dadoComRotulo.contains(":")) {
+            String[] partes = dadoComRotulo.split(":");
+            if (partes.length > 1) {
+                return partes[1].trim(); // Retorna o valor limpo
+            }
+            return "";
+        }
+        return dadoComRotulo != null ? dadoComRotulo.trim() : "";
+    }
 
     private String formatarParaPersistencia(Pessoa pessoa) {
-        // Atributos base: ID;NOME;CPF;TELEFONE;EMAIL;SENHA;SEXO
-        String base = pessoa.getId() + DELIMITADOR + pessoa.getNome() + DELIMITADOR + pessoa.getCpf() +
-                DELIMITADOR + pessoa.getTelefone() + DELIMITADOR + pessoa.getEmail() + DELIMITADOR +
-                pessoa.getSenha() + DELIMITADOR + pessoa.getSexo();
+        String base = "ID: " + pessoa.getId() + DELIMITADOR +
+                "Nome: " + pessoa.getNome() + DELIMITADOR +
+                "CPF: " + pessoa.getCpf() + DELIMITADOR +
+                "Tel: " + pessoa.getTelefone() + DELIMITADOR +
+                "Email: " + pessoa.getEmail() + DELIMITADOR +
+                "Senha: " + pessoa.getSenha() + DELIMITADOR +
+                "Sexo: " + pessoa.getSexo();
 
         if (pessoa instanceof Cliente) {
             Cliente c = (Cliente) pessoa;
-            return "CLIENTE" + DELIMITADOR + base + DELIMITADOR + c.getIdade() + DELIMITADOR + c.getPeso() +
-                    DELIMITADOR + c.getAltura() + DELIMITADOR + c.getObjetivo() + DELIMITADOR + c.getRestricaoFisica();
+            return "TIPO: CLIENTE" + DELIMITADOR + base + DELIMITADOR +
+                    "Idade: " + c.getIdade() + DELIMITADOR +
+                    "Peso: " + c.getPeso() + DELIMITADOR +
+                    "Altura: " + c.getAltura() + DELIMITADOR +
+                    "Obj: " + c.getObjetivo() + DELIMITADOR +
+                    "Restricao: " + c.getRestricaoFisica();
 
         } else if (pessoa instanceof Profissional) {
             Profissional p = (Profissional) pessoa;
-            return "PROFISSIONAL" + DELIMITADOR + base + DELIMITADOR + p.getEspecialidade() + DELIMITADOR +
-                    p.getNumeroRegistro() + DELIMITADOR + p.getValorAula();
+            return "TIPO: PROFISSIONAL" + DELIMITADOR + base + DELIMITADOR +
+                    "Espec: " + p.getEspecialidade() + DELIMITADOR +
+                    "CREF: " + p.getNumeroRegistro() + DELIMITADOR +
+                    "Valor: " + p.getValorAula();
         }
-        return ""; // Caso não seja Cliente nem Profissional
+        return "";
     }
 
     private Pessoa parseLinhaParaObjeto(String linha) {
@@ -85,32 +99,32 @@ public class PessoaDAO {
             return null;
         }
 
-        String tipo = partes[0];
         try {
-            // Extração dos atributos base (índices 1 a 7)
-            int id = Integer.parseInt(partes[1]);
-            String nome = partes[2];
-            String cpf = partes[3];
-            String telefone = partes[4];
-            String email = partes[5];
-            String senha = partes[6];
-            String sexo = partes[7];
+            String tipo = extrairValor(partes[0]);
+
+            int id = Integer.parseInt(extrairValor(partes[1]));
+            String nome = extrairValor(partes[2]);
+            String cpf = extrairValor(partes[3]);
+            String telefone = extrairValor(partes[4]);
+            String email = extrairValor(partes[5]);
+            String senha = extrairValor(partes[6]);
+            String sexo = extrairValor(partes[7]);
 
             if (tipo.equals("CLIENTE") && partes.length >= 13) {
-                // Atributos de Cliente: IDADE(8), PESO(9), ALTURA(10), OBJETIVO(11), RESTRICAO(12)
-                int idade = Integer.parseInt(partes[8]);
-                double peso = Double.parseDouble(partes[9]);
-                double altura = Double.parseDouble(partes[10]);
-                String objetivo = partes[11];
-                String restricaoFisica = partes[12];
+                // atributos de Cliente: IDADE(8), PESO(9), ALTURA(10), OBJETIVO(11), RESTRICAO(12)
+                int idade = Integer.parseInt(extrairValor(partes[8]));
+                double peso = Double.parseDouble(extrairValor(partes[9]));
+                double altura = Double.parseDouble(extrairValor(partes[10]));
+                String objetivo = extrairValor(partes[11]);
+                String restricaoFisica = extrairValor(partes[12]);
 
                 return new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura, objetivo, restricaoFisica);
 
             } else if (tipo.equals("PROFISSIONAL") && partes.length >= 11) {
                 // Atributos de Profissional: ESPECIALIDADE(8), NUMEROREGISTRO(9), VALORAULA(10)
-                String especialidade = partes[8];
-                int registro = Integer.parseInt(partes[9]);
-                double valorAula = Double.parseDouble(partes[10]);
+                String especialidade = extrairValor(partes[8]);
+                int registro = Integer.parseInt(extrairValor(partes[9]));
+                double valorAula = Double.parseDouble(extrairValor(partes[10]));
 
                 return new Profissional(id, nome, cpf, telefone, email, senha, sexo, especialidade, registro, valorAula);
             }

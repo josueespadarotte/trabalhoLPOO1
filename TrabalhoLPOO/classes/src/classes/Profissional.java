@@ -1,5 +1,8 @@
 package classes;
-
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import classes.Cliente;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -240,6 +243,43 @@ public class Profissional extends Pessoa{
         }
     }
 
+    public void salvarFichaTreinoEmTxt(Cliente aluno) {
+        if (aluno.carga.isEmpty()) {
+            System.out.println("A ficha de treino do(a) aluno(a) " + aluno.getNome() + " está vazia. Nada para salvar.");
+            return;
+        }
+
+        // Cria o nome do arquivo, substituindo espaços no nome do cliente por underscore
+        String nomeArquivo = "ficha_treino_" + aluno.getNome().replaceAll("\\s+", "_") + ".txt";
+
+        // Usando try-with-resources para garantir que o arquivo seja fechado
+        try (PrintWriter writer = new PrintWriter(new FileWriter(nomeArquivo))) {
+
+            writer.println("=== FICHA DE TREINO DE " + aluno.getNome().toUpperCase() + " ===");
+            writer.println("Objetivo: " + aluno.getObjetivo());
+            writer.println("-------------------------------------------------");
+
+            // Cabeçalho da tabela de exercícios
+            writer.println(String.format("%-25s | %-12s | %-5s", "EXERCÍCIO", "PESO (KG)", "REPS"));
+            writer.println("-------------------------------------------------");
+
+            // Itera sobre a lista de exercícios do cliente e escreve no arquivo
+            for (Pessoa.exercicies exercicio : aluno.carga) {
+                String nomeEx = exercicio.getNomeex();
+                String pesoEx = exercicio.getPesoex();
+                String repsEx = exercicio.getReps();
+
+                // Formata o exercício em colunas
+                writer.println(String.format("%-25s | %-12s | %-5s", nomeEx, pesoEx, repsEx));
+            }
+
+            writer.println("-------------------------------------------------");
+            System.out.println("\uD83D\uDCC4 Ficha de treino de " + aluno.getNome() + " salva com sucesso em: " + nomeArquivo);
+
+        } catch (IOException e) {
+            System.out.println("\uD83D\uDED1 Erro ao salvar o arquivo: " + e.getMessage());
+        }
+    }
     @Override
     public String toString() {
         return "Profissional{" +

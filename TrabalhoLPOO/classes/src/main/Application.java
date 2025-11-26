@@ -221,12 +221,11 @@ public class Application {
                                 do {
                                     System.out.println("\n===== MENU DO PERSONAL =====");
                                     System.out.println("1. Ver Alunos Cadastrados");
-
-                                    System.out.println("3. Atualizar Ficha de Treino");
-                                    System.out.println("4. Visualizar Avaliações de um Aluno");
-                                    System.out.println("5. Atualizar Perfil");
-                                    System.out.println("6. Gerenciar Agenda");
-                                    System.out.println("7. Visualizar Perfil");
+                                    System.out.println("2. Atualizar Ficha de Treino");
+                                    System.out.println("3. Visualizar Avaliações de um Aluno");
+                                    System.out.println("4. Atualizar Perfil");
+                                    System.out.println("5. Gerenciar Agenda");
+                                    System.out.println("6. Visualizar Perfil");
                                     System.out.println("0. Sair");
                                     System.out.print("\nEscolha uma Opção: \n");
 
@@ -272,6 +271,8 @@ public class Application {
                                                                 clienteEncontrado.removerCarga(indiceParaRemover);
                                                                 break;
                                                             case 3:
+                                                                Cliente clienteParaSalvar = clienteEncontrado;
+                                                                personal.salvarFichaTreinoEmTxt(clienteParaSalvar);
                                                                 break;
                                                         }
                                                     } catch (Exception e) {
