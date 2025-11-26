@@ -26,13 +26,12 @@ public class SistemaGymGui extends JFrame {
         super("Sistema de Academia - LPOO");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-        setLocationRelativeTo(null); // Centralizar na tela
+        setLocationRelativeTo(null);
 
         // Inicializar dados
         pessoaDAO = new PessoaDAO();
         cadastros = pessoaDAO.carregar();
 
-        // Configurar layout de cartões (para trocar de tela)
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
@@ -80,7 +79,6 @@ public class SistemaGymGui extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Executar na Thread de Eventos do Swing (Boas práticas)
         SwingUtilities.invokeLater(() -> {
             new SistemaGymGui().setVisible(true);
         });

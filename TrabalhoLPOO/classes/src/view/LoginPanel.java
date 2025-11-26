@@ -15,20 +15,20 @@ public class LoginPanel extends JPanel {
     public LoginPanel(SistemaGymGui frame) {
         this.frame = frame;
         setLayout(new GridBagLayout());
-        setBackground(new Color(240, 248, 255)); // Cor de fundo suave
+        setBackground(new Color(240, 248, 255)); //Cor de fundo
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Título
+        //Título
         JLabel lblTitulo = new JLabel("Bem-vindo ao GymSystem");
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(lblTitulo, gbc);
 
-        // Campo Email
+        //Campo Email
         gbc.gridwidth = 1;
         gbc.gridy = 1; gbc.gridx = 0;
         add(new JLabel("Email:"), gbc);
@@ -37,7 +37,7 @@ public class LoginPanel extends JPanel {
         gbc.gridx = 1;
         add(txtEmail, gbc);
 
-        // Campo Senha
+        //Campo Senha
         gbc.gridy = 2; gbc.gridx = 0;
         add(new JLabel("Senha:"), gbc);
 
@@ -45,14 +45,14 @@ public class LoginPanel extends JPanel {
         gbc.gridx = 1;
         add(txtSenha, gbc);
 
-        // Botão Entrar
+        //Botão Entrar
         JButton btnEntrar = new JButton("Entrar");
         btnEntrar.setBackground(new Color(70, 130, 180));
         btnEntrar.setForeground(Color.WHITE);
         gbc.gridy = 3; gbc.gridx = 0; gbc.gridwidth = 2;
         add(btnEntrar, gbc);
 
-        // Botão Cadastrar
+        //Botão Cadastrar
         JButton btnCadastrar = new JButton("Não tem conta? Cadastre-se");
         btnCadastrar.setBorderPainted(false);
         btnCadastrar.setContentAreaFilled(false);
@@ -60,7 +60,7 @@ public class LoginPanel extends JPanel {
         gbc.gridy = 4;
         add(btnCadastrar, gbc);
 
-        // Ações
+        //Ações
         btnEntrar.addActionListener(e -> realizarLogin());
         btnCadastrar.addActionListener(e -> frame.mostrarTela(SistemaGymGui.TELA_CADASTRO));
     }

@@ -11,27 +11,27 @@ import java.util.Random;
 public class CadastroPanel extends JPanel {
     private SistemaGymGui frame;
 
-    // Campos Comuns
+    //Campos Comuns
     private JTextField txtNome, txtCpf, txtTelefone, txtEmail;
     private JPasswordField txtSenha;
     private JComboBox<String> cbSexo;
     private JRadioButton rbAluno, rbPersonal;
 
-    // Painéis Específicos
+    //Painéis Específicos
     private JPanel cardPanelEspecifico;
     private CardLayout cardLayoutEspecifico;
 
-    // Campos Aluno
+    //Campos Aluno
     private JTextField txtIdade, txtPeso, txtAltura, txtObjetivo, txtRestricao;
 
-    // Campos Personal
+    //Campos Personal
     private JTextField txtCref, txtEspecialidade, txtValorAula;
 
     public CadastroPanel(SistemaGymGui frame) {
         this.frame = frame;
         setLayout(new BorderLayout());
 
-        // --- Topo: Título e Seleção de Tipo ---
+        //cabeçalho Título e Seleção de Tipo
         JPanel topPanel = new JPanel(new GridLayout(2, 1));
         JLabel lblTitulo = new JLabel("Novo Cadastro", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
@@ -48,13 +48,13 @@ public class CadastroPanel extends JPanel {
         topPanel.add(typePanel);
         add(topPanel, BorderLayout.NORTH);
 
-        // --- Centro: Formulário ---
+        //Formulário
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Dados Pessoais (Comuns)
+        // Dados Pessoais
         addCampo(formPanel, gbc, 0, "Nome:", txtNome = new JTextField(20));
         addCampo(formPanel, gbc, 1, "CPF:", txtCpf = new JTextField(15));
         addCampo(formPanel, gbc, 2, "Telefone:", txtTelefone = new JTextField(15));
@@ -64,11 +64,11 @@ public class CadastroPanel extends JPanel {
         String[] sexos = {"M", "F"};
         addCampo(formPanel, gbc, 5, "Sexo:", cbSexo = new JComboBox<>(sexos));
 
-        // Área Dinâmica (Aluno vs Personal)
+        //Área Dinâmica
         cardLayoutEspecifico = new CardLayout();
         cardPanelEspecifico = new JPanel(cardLayoutEspecifico);
 
-        // Painel Aluno
+        //Painel Aluno
         JPanel pnlAluno = new JPanel(new GridLayout(5, 2, 5, 5));
         pnlAluno.setBorder(BorderFactory.createTitledBorder("Dados do Aluno"));
         pnlAluno.add(new JLabel("Idade:")); pnlAluno.add(txtIdade = new JTextField());
@@ -77,7 +77,7 @@ public class CadastroPanel extends JPanel {
         pnlAluno.add(new JLabel("Objetivo:")); pnlAluno.add(txtObjetivo = new JTextField());
         pnlAluno.add(new JLabel("Restrição Física:")); pnlAluno.add(txtRestricao = new JTextField("Nenhuma"));
 
-        // Painel Personal
+        //Painel Personal
         JPanel pnlPersonal = new JPanel(new GridLayout(3, 2, 5, 5));
         pnlPersonal.setBorder(BorderFactory.createTitledBorder("Dados do Profissional"));
         pnlPersonal.add(new JLabel("CREF:")); pnlPersonal.add(txtCref = new JTextField());
@@ -92,7 +92,7 @@ public class CadastroPanel extends JPanel {
 
         add(new JScrollPane(formPanel), BorderLayout.CENTER);
 
-        // --- Rodapé: Botões ---
+        //Rodapé/Botões
         JPanel botPanel = new JPanel();
         JButton btnSalvar = new JButton("Salvar Cadastro");
         JButton btnVoltar = new JButton("Voltar");
@@ -104,7 +104,7 @@ public class CadastroPanel extends JPanel {
         botPanel.add(btnSalvar);
         add(botPanel, BorderLayout.SOUTH);
 
-        // Listeners
+        //Listeners
         rbAluno.addActionListener(e -> cardLayoutEspecifico.show(cardPanelEspecifico, "ALUNO"));
         rbPersonal.addActionListener(e -> cardLayoutEspecifico.show(cardPanelEspecifico, "PERSONAL"));
 

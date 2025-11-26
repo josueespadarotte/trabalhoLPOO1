@@ -2,4 +2,4 @@
 Objetivo: gorda
 Restrição Física: Nenhuma
 ----------------------------------------
-amoeba | Peso: 50.0 | Reps: 21
+peito | Peso: 20.0 | Reps: 12
