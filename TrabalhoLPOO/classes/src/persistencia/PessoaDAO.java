@@ -14,10 +14,10 @@ import java.util.List;
 
 public class PessoaDAO {
     private final String NOME_ARQUIVO = "cadastros.txt";
-    private final String DELIMITADOR = ";";
+    private final String SEPARADOR = ";";
 
-    /*lista com nomes e atributos de todos os cadastros do sistema
-     */
+    //lista com nomes e atributos de todos os cadastros do sistema
+
     public void salvar(List<Pessoa> cadastros) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(NOME_ARQUIVO))) {
             for (Pessoa pessoa : cadastros) {
@@ -36,7 +36,7 @@ public class PessoaDAO {
 
     public List<Pessoa> carregar() {
         List<Pessoa> cadastrosCarregados = new ArrayList<>();
-        // Tenta criar o arquivo se ele não existir
+        //  criaa o arquivo se não tiver
         try (BufferedReader reader = new BufferedReader(new FileReader(NOME_ARQUIVO))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
@@ -57,7 +57,7 @@ public class PessoaDAO {
         if (dadoComRotulo != null && dadoComRotulo.contains(":")) {
             String[] partes = dadoComRotulo.split(":");
             if (partes.length > 1) {
-                return partes[1].trim(); // Retorna o valor limpo
+                return partes[1].trim();
             }
             return "";
         }
@@ -65,35 +65,35 @@ public class PessoaDAO {
     }
 
     private String formatarParaPersistencia(Pessoa pessoa) {
-        String base = "ID: " + pessoa.getId() + DELIMITADOR +
-                "Nome: " + pessoa.getNome() + DELIMITADOR +
-                "CPF: " + pessoa.getCpf() + DELIMITADOR +
-                "Tel: " + pessoa.getTelefone() + DELIMITADOR +
-                "Email: " + pessoa.getEmail() + DELIMITADOR +
-                "Senha: " + pessoa.getSenha() + DELIMITADOR +
+        String base = "ID: " + pessoa.getId() + SEPARADOR +
+                "Nome: " + pessoa.getNome() + SEPARADOR +
+                "CPF: " + pessoa.getCpf() + SEPARADOR +
+                "Tel: " + pessoa.getTelefone() + SEPARADOR +
+                "Email: " + pessoa.getEmail() + SEPARADOR +
+                "Senha: " + pessoa.getSenha() + SEPARADOR +
                 "Sexo: " + pessoa.getSexo();
 
         if (pessoa instanceof Cliente) {
             Cliente c = (Cliente) pessoa;
-            return "TIPO: CLIENTE" + DELIMITADOR + base + DELIMITADOR +
-                    "Idade: " + c.getIdade() + DELIMITADOR +
-                    "Peso: " + c.getPeso() + DELIMITADOR +
-                    "Altura: " + c.getAltura() + DELIMITADOR +
-                    "Obj: " + c.getObjetivo() + DELIMITADOR +
+            return "TIPO: CLIENTE" + SEPARADOR + base + SEPARADOR +
+                    "Idade: " + c.getIdade() + SEPARADOR +
+                    "Peso: " + c.getPeso() + SEPARADOR +
+                    "Altura: " + c.getAltura() + SEPARADOR +
+                    "Obj: " + c.getObjetivo() + SEPARADOR +
                     "Restricao: " + c.getRestricaoFisica();
 
         } else if (pessoa instanceof Profissional) {
             Profissional p = (Profissional) pessoa;
-            return "TIPO: PROFISSIONAL" + DELIMITADOR + base + DELIMITADOR +
-                    "Espec: " + p.getEspecialidade() + DELIMITADOR +
-                    "CREF: " + p.getNumeroRegistro() + DELIMITADOR +
+            return "TIPO: PROFISSIONAL" + SEPARADOR + base + SEPARADOR +
+                    "Espec: " + p.getEspecialidade() + SEPARADOR +
+                    "CREF: " + p.getNumeroRegistro() + SEPARADOR +
                     "Valor: " + p.getValorAula();
         }
         return "";
     }
 
     private Pessoa parseLinhaParaObjeto(String linha) {
-        String[] partes = linha.split(DELIMITADOR);
+        String[] partes = linha.split(SEPARADOR);
 
         if (partes.length < 8) {
             return null;
@@ -129,8 +129,8 @@ public class PessoaDAO {
                 return new Profissional(id, nome, cpf, telefone, email, senha, sexo, especialidade, registro, valorAula);
             }
 
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            System.err.println("Erro de parsing de linha (formato inválido): " + linha);
+        } catch (NumberFormatException e) {
+            System.err.println("formato inválido: " + linha);
         }
         return null;
     }

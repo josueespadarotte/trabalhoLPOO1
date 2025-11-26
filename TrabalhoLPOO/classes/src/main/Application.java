@@ -3,46 +3,37 @@ package main;
 import classes.*;
 import classes.Pessoa;
 import persistencia.PessoaDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import classes.Agendamento;
 
 public class Application {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        // Não é necessário inicializar as listas aqui
-        // ArrayList<Pessoa.exercicies> listaexercicio = new ArrayList<>();
 
-        // 1. Instancia o objeto de persistência (DAO)
         PessoaDAO pessoaDAO = new PessoaDAO();
-
-        // 2. Carrega os dados (Substitui a inicialização manual da lista)
         List<Pessoa> cadastros = pessoaDAO.carregar();
-
-        // Se a lista estiver vazia após carregar (primeiro uso), inicializa com dados de demonstração
 
         Profissional personal = new Profissional(1221, "Dr.Davi ", "726394860032", "27999362832",
                 "2", "3", "M", "personal trainer", 4342342, 180);
 
-        Cliente cliente= new Cliente(213, "Andrea Horta", "123.456.789-00", "1231123554",
+        Cliente cliente = new Cliente(213, "Andrea Horta", "123.456.789-00", "1231123554",
                 "1", "2", "F", 30, 65.5, 1.65,
                 "Hipertrofia", "Nenhuma");
 
-        // A lista precisa ser do tipo ArrayList ou similar para permitir .add()
         if (cadastros instanceof ArrayList) {
             cadastros.add(personal);
             cadastros.add(cliente);
-            personal.cadastrarCliente(cliente); // Lógica de relacionamento
+            personal.cadastrarCliente(cliente);
         }
 
         System.out.println("===TELA DE LOGIN===");
         int opcao;
         do {
-            System.out.println("1.Login" +
-                    "\n2.Cadastro" +
-                    "\n3.Sair" +
-                    "\nOpção:");
+            System.out.println("1.Login" + "\n2.Cadastro" + "\n3.Sair" + "\nOpção:");
             opcao = sc.nextInt();
 
             boolean loginRealizado = false;
@@ -58,11 +49,11 @@ public class Application {
                     loginRealizado = false;
 
                     for (Pessoa p : cadastros) {
-                        //verifica se as credenciais (email e senha) batem
+                        //verifica se email e senha batem
                         if (p.getEmail().equals(emailLogin) && p.verificarSenha(senhaLogin)) {
-                            loginRealizado = true; // Login validado com sucesso
+                            loginRealizado = true; // Login validado
 
-                            // verifica o tipo de utilizador
+                            // verifica se é aluno ou personal
                             if (p instanceof Cliente) {
                                 Cliente alunoLogado = (Cliente) p;
                                 System.out.println("Bem-vindo, Aluno(a) " + alunoLogado.getNome());
@@ -82,7 +73,7 @@ public class Application {
                                     opcCliente = sc.nextInt();
 
                                     switch (opcCliente) {
-                                        case 1: // Agendar Personal
+                                        case 1:
                                             System.out.println("\n=== AGENDAMENTO ===");
 
                                             // Listar Profissionais com ID para o usuário saber qual escolher
@@ -101,15 +92,15 @@ public class Application {
                                                 break;
                                             }
 
-                                            // 2. Pedir o ID (Alteração aqui)
+                                            // 2. Pedir o ID do personal
                                             System.out.print("\nDigite o ID do personal que deseja agendar: ");
                                             int idBusca = sc.nextInt();
                                             sc.nextLine();
 
-                                            // exibe uma lista com id e nome de personais
+                                            // exibe uma lista com id e nome dos personais
                                             Profissional personalEncontrado = null;
                                             for (Pessoa xy : cadastros) {
-                                                // Compara o ID digitado com o ID do cadastro
+                                                // comparação de id
                                                 if (xy instanceof Profissional && xy.getId().equals(idBusca)) {
                                                     personalEncontrado = (Profissional) xy;
                                                     break;
@@ -121,7 +112,7 @@ public class Application {
                                                 int diasPorSemana = sc.nextInt();
                                                 sc.nextLine();
 
-                                                // Consideramos uma média de 4 semanas por mês
+                                                // calculo da diaria x 4 semanas
                                                 int totalAulasMensal = diasPorSemana * 4;
 
                                                 double valorMensal = personalEncontrado.calcularValorAula(totalAulasMensal); //
@@ -129,16 +120,13 @@ public class Application {
                                                 System.out.printf(">> Estimativa: Para %d dias na semana " +
                                                                 "(aprox. %d aulas/mês), o valor mensal será: R$ %.2f\n\n",
                                                         diasPorSemana, totalAulasMensal, valorMensal);
-
-
                                                 System.out.print("Deseja prosseguir com o agendamento de uma aula agora? (S/N): ");
                                                 String resposta = sc.next().toUpperCase();
 
                                                 if (resposta.equalsIgnoreCase("S")) {
                                                     System.out.print("Digite a Data (dd/mm/aaaa): ");
                                                     String data = sc.next();
-                                                    // ... restante do código de agendamento que já existia ...
-                                                    System.out.print("Digite o Horário (ex: 14:00): "); // gostaria de colocar lista de horario por exemplo 1 - 14:00...
+                                                    System.out.print("Digite o Horário (ex: 14:00): ");
                                                     String horario = sc.next();
                                                     System.out.print("Tipo de Sessão (Treino/Avaliação): ");
                                                     sc.nextLine();
@@ -161,7 +149,7 @@ public class Application {
                                             }
                                             break;
 
-                                        case 2:
+                                        case 2://aqui vai visualizar os treinos do aluno
                                             try {
                                                 alunoLogado.lerFichaTreinoDoArquivo();
                                             } catch (Exception e) {
@@ -176,7 +164,7 @@ public class Application {
                                             double carga = sc.nextDouble();
                                             System.out.println("Repetições: ");
                                             int reps = sc.nextInt();
-                                            // Ajuste conforme seu método registrarCarga (se pedir reps, adicione)
+                                            //registra o exercicio na ficha do aluno
                                             alunoLogado.registrarCarga(nomeEx, carga, reps);
                                             System.out.println("Carga registrada!");
                                             Cliente clienteParaSalvar = alunoLogado;
@@ -197,11 +185,13 @@ public class Application {
                                             double cintura = sc.nextDouble();
                                             System.out.println("Altura: ");
                                             double altura = sc.nextDouble();
+                                            //atualiza a lista com as novas medidas
                                             alunoLogado.atualizarMedidas(peso, braco, cintura, altura);
                                             System.out.println("Medidas atualizadas!\n");
                                             break;
 
                                         case 6:
+                                            //metodo para ver o perfil do aluno
                                             alunoLogado.verPerfilAluno();
                                             break;
 
@@ -224,16 +214,17 @@ public class Application {
                                     System.out.println("\n===== MENU DO PERSONAL =====");
                                     System.out.println("1. Ver Alunos Cadastrados");
                                     System.out.println("2. Atualizar Ficha de Treino");
-                                    System.out.println("3. Visualizar Avaliações de um Aluno");
-                                    System.out.println("4. Atualizar Perfil");
-                                    System.out.println("5. Gerenciar Agenda");
-                                    System.out.println("6. Visualizar Perfil");
+                                    System.out.println("3. Atualizar Perfil");
+                                    System.out.println("4. Gerenciar Agenda");
+                                    System.out.println("5. Visualizar Perfil");
+                                    System.out.println("6. Exibir Agenda");
                                     System.out.println("0. Sair");
                                     System.out.print("\nEscolha uma Opção: \n");
 
                                     opcPersonal = sc.nextInt();
 
                                     switch (opcPersonal) {
+
                                         case 1:
                                             System.out.println("\n=== ALUNOS ===");
                                             personalLogado.listarClientes();
@@ -242,7 +233,6 @@ public class Application {
                                         case 2:
                                             System.out.println("\nAtualizar ficha de qual aluno? Id:");
                                             int idAtualiza = sc.nextInt();
-                                            // Correção da lógica de busca aqui
                                             Cliente clienteEncontrado = personalLogado.buscarClienteId(idAtualiza);
 
                                             if (clienteEncontrado != null) {
@@ -253,59 +243,48 @@ public class Application {
                                                     escolha = sc.nextInt();
                                                     try {
                                                         switch (escolha) {
-                                                            case 1:
+                                                            case 1://adicionar exercicios na ficha
                                                                 System.out.print("Digite o nome do exercicio: ");
                                                                 String nomeTreino = sc.next();
                                                                 System.out.print("Carga usada (kg): ");
                                                                 double cargaTreino = sc.nextDouble();
                                                                 System.out.print("Quantas Repetições: ");
                                                                 int repeticao = sc.nextInt();
-                                                                // Nota: Verifique se registrarCarga existe no Profissional ou se deve ser no Cliente
                                                                 clienteEncontrado.registrarCarga(nomeTreino, cargaTreino,
                                                                         repeticao);
                                                                 break;
                                                             case 2:
-                                                                clienteEncontrado.listarCargaComIndices(); // O usuário verá a lista numerada
-
+                                                                clienteEncontrado.listarCargaComIndices(); //mostra os exercicios
                                                                 System.out.print("Digite o NÚMERO (posição) do exercício que deseja remover: ");
                                                                 int indiceParaRemover = sc.nextInt();
 
-                                                                clienteEncontrado.removerCarga(indiceParaRemover);
+                                                                clienteEncontrado.removerCarga(indiceParaRemover);//remove o exercicio
                                                                 break;
                                                             case 3:
                                                                 Cliente clienteParaSalvar = clienteEncontrado;
-                                                                personal.salvarFichaTreinoEmTxt(clienteParaSalvar);
+                                                                personal.salvarFichaTreinoEmTxt(clienteParaSalvar);//salva a ficha atualizada no txt
                                                                 break;
                                                         }
                                                     } catch (Exception e) {
                                                         System.out.println("Erro ao atualizar ficha: \n" + e.getMessage());
                                                     }
-                                                } while (escolha != 3); // Alterado para sair no 3 (Voltar)
+                                                } while (escolha != 3);
                                             } else {
                                                 System.out.println("Aluno não encontrado na sua lista.\n");
                                             }
                                             break;
 
-                                        case 3:
-                                            try {
-                                                personalLogado.visualizarAvaliacoesDosAlunos();
-                                            }catch (Exception e){
-                                                System.out.println("Nenhuma avaliação feita\n");
-                                            }
-
-                                            break;
-                                        case 4: // ATUALIZAR PERFIL
+                                        case 3: // ATUALIZAR PERFIL
                                             System.out.println("\n=== ATUALIZAR PERFIL ===");
                                             System.out.println("1. Dados Pessoais (Nome, Telefone, Email)");
                                             System.out.println("2. Alterar Senha");
                                             System.out.println("0. Voltar");
                                             System.out.print("Escolha: ");
-
                                             int subOpc = sc.nextInt();
-                                            sc.nextLine(); // Limpa o buffer do teclado
+                                            sc.nextLine();
 
                                             switch (subOpc) {
-                                                case 1: // Dados Pessoais
+                                                case 1:
                                                     System.out.println("\n=== ATUALIZAR DADOS PESSOAIS ===");
                                                     System.out.println("(Pressione ENTER para manter o valor atual)");
 
@@ -351,7 +330,7 @@ public class Application {
                                             }
                                             break;
 
-                                        case 5:
+                                        case 4:
                                             System.out.println("\n=== GERENCIAR AGENDA ===");
                                             List<Agendamento> agenda = personal.getAgenda();
                                             System.out.println("1. Visualizar/Confirmar Agendamentos Pendentes");
@@ -361,7 +340,7 @@ public class Application {
                                             System.out.print("Escolha: ");
 
                                             int esc = sc.nextInt();
-                                            sc.nextLine(); // Limpa buffer
+                                            sc.nextLine();
                                             switch (esc) {
                                                 case 1:
                                                     if (agenda.isEmpty()) {
@@ -376,7 +355,7 @@ public class Application {
                                                                     " | Aluno: " + ag.getCliente().getNome() +
                                                                     " | Status: " + ag.getStatus());
 
-                                                            if(ag.getStatus() == Agendamento.Status.AGENDADO) {
+                                                            if (ag.getStatus() == Agendamento.Status.AGENDADO) {
                                                                 temPendente = true;
                                                             }
                                                         }
@@ -447,9 +426,12 @@ public class Application {
                                             }
                                             break;
 
-                                        case 6:
+                                        case 5:
                                             personalLogado.verPerfilProf();
                                             break;
+
+                                        case 6:
+                                            personalLogado.exibirAgenda();
 
                                         case 0:
                                             System.out.println("Saindo...\n");
@@ -574,7 +556,6 @@ public class Application {
                                     sc.next();
                                 }
                             }
-
                             System.out.println("Digite seu objetivo: ");
                             sc.nextLine();
                             String objetivo = sc.nextLine();
@@ -601,17 +582,16 @@ public class Application {
                                     escolha = 0;
                                 }
                             } while (!entradaValida);
-                            if (escolha == 1) {
+                            if (escolha == 1) {//aluno com restrição
                                 System.out.print("Qual: ");
                                 String restricaoFisica = sc.nextLine();
                                 cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
                                         objetivo, restricaoFisica));
-                            } else if (escolha == 2) {
+                            } else if (escolha == 2) {//aluno sem restrição
                                 cadastros.add(new Cliente(id, nome, cpf, telefone, email, senha, sexo, idade, peso, altura,
                                         objetivo));
                             }
-                        } else {
-                            // personal
+                        } else {// personal
                             System.out.print("Especialidade: ");
                             sc.nextLine();
                             String especialidade = sc.nextLine();
@@ -625,19 +605,16 @@ public class Application {
                         }
                         System.out.println("Cadastrado com sucesso!\nSeja Bem Vindo!\n");
                         break;
-                    }catch (java.util.InputMismatchException e){
+                    } catch (java.util.InputMismatchException e) {
                         System.out.println("Valor incorreto");
                     }
-
                 case 3:
                     System.out.println("Encerrando aplicação...\n");
                     pessoaDAO.salvar(cadastros);
                     break;
-
                 default:
                     System.out.println("Opção Inválida!\n");
             }
-
         } while (opcao != 3);
     }
 }

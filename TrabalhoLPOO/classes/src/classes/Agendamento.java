@@ -29,7 +29,6 @@ public class Agendamento {
     }
 
     //        MÉTODOS DE STATUS
-
     public void confirmarAgendamento() {
         if (this.status != Status.AGENDADO) {
             System.out.println("Agendamento só pode ser confirmado se estiver no status AGENDADO.");
@@ -53,14 +52,8 @@ public class Agendamento {
         }
         this.status = Status.CONCLUIDO;
     }
-    // ===============================
-    // MÉTODOS RELACIONADOS AO CLIENTE
-    // ===============================
 
     //           GETTERS
-    public int getId() {
-        return id;
-    }
 
     public String getData() {
         return data;
@@ -72,14 +65,6 @@ public class Agendamento {
 
     public Cliente getCliente() {
         return cliente;
-    }
-
-    public String getPersonal() {
-        return personal;
-    }
-
-    public String getTipoSessao() {
-        return tipoSessao;
     }
 
     public Status getStatus() {

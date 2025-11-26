@@ -1,10 +1,3 @@
-TIPO: PROFISSIONAL;ID: 1221;Nome: Dr.Davi;CPF: 726394860032;Tel: 27999362832;Email: 2;Senha: 3;Sexo: M;Espec: personal trainer;CREF: 4342342;Valor: 180.0
 TIPO: CLIENTE;ID: 213;Nome: Andrea Horta;CPF: 123.456.789-00;Tel: 1231123554;Email: 1;Senha: 2;Sexo: F;Idade: 30;Peso: 65.5;Altura: 1.65;Obj: Hipertrofia;Restricao: Nenhuma
 TIPO: CLIENTE;ID: 1335;Nome: victoria;CPF: 12312312315;Tel: 27999999999;Email: vic@gmail.com;Senha: v1234;Sexo: F;Idade: 20;Peso: 50.0;Altura: 160.0;Obj: gorda;Restricao: Nenhuma
-TIPO: PROFISSIONAL;ID: 1221;Nome: Dr.Davi;CPF: 726394860032;Tel: 27999362832;Email: 2;Senha: 3;Sexo: M;Espec: personal trainer;CREF: 4342342;Valor: 180.0
-TIPO: CLIENTE;ID: 213;Nome: Andrea Horta;CPF: 123.456.789-00;Tel: 1231123554;Email: 1;Senha: 2;Sexo: F;Idade: 30;Peso: 65.5;Altura: 1.65;Obj: Hipertrofia;Restricao: Nenhuma
 TIPO: PROFISSIONAL;ID: 9958;Nome: josue;CPF: 78945665421;Tel: 272154687456;Email: josue@gmail.com;Senha: j789;Sexo: M;Espec: alguma;CREF: 123;Valor: 150.0
-TIPO: PROFISSIONAL;ID: 1221;Nome: Dr.Davi;CPF: 726394860032;Tel: 27999362832;Email: 2;Senha: 3;Sexo: M;Espec: personal trainer;CREF: 4342342;Valor: 180.0
-TIPO: CLIENTE;ID: 213;Nome: Andrea Horta;CPF: 123.456.789-00;Tel: 1231123554;Email: 1;Senha: 2;Sexo: F;Idade: 30;Peso: 65.5;Altura: 1.65;Obj: Hipertrofia;Restricao: Nenhuma
-TIPO: PROFISSIONAL;ID: 1221;Nome: Dr.Davi ;CPF: 726394860032;Tel: 27999362832;Email: 2;Senha: 3;Sexo: M;Espec: personal trainer;CREF: 4342342;Valor: 180.0
-TIPO: CLIENTE;ID: 213;Nome: Andrea Horta;CPF: 123.456.789-00;Tel: 1231123554;Email: 1;Senha: 2;Sexo: F;Idade: 30;Peso: 65.5;Altura: 1.65;Obj: Hipertrofia;Restricao: Nenhuma

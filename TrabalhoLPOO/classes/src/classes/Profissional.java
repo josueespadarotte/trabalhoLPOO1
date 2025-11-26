@@ -15,7 +15,6 @@ public class Profissional extends Pessoa{
     private String disponibilidade;
     private double valorAula;
 
-    private List<Avaliacao> avAlunos;
     public List<Agendamento> getAgenda() {
         return this.agenda;
     }
@@ -99,7 +98,6 @@ public class Profissional extends Pessoa{
 
      private List<Agendamento> agenda;
     private List<Cliente> listaClientes;
-    private List<Avaliacao> historicoAvaliacoes;
 
     public boolean marcarHr(Cliente c, Agendamento ag) {
         if(estaDisponivel(ag.getData(), ag.getHorario())){
@@ -137,9 +135,6 @@ public class Profissional extends Pessoa{
         return true;
     }
 
-    public void listarHrDisponivel(String data) {
-    }
-
     public void exibirAgenda() {
         System.out.println("=== Agenda Completa ===");
         if (agenda.isEmpty()) {
@@ -153,22 +148,10 @@ public class Profissional extends Pessoa{
         }
     }
 
-
-    // gestao de cliente
-    public void registrarCarga(String nome, double peso, int reps){
-        Pessoa.exercicies carga = new Pessoa.exercicies(nome, peso, reps);
-    }
     public void cadastrarCliente(Cliente cliente) {
         if (cliente != null && !listaClientes.contains(cliente)){
             listaClientes.add(cliente);
             System.out.println("Cliente " + cliente.getNome() + " cadastrado com sucesso.");
-        }
-    }
-
-    public void removerCliente(Cliente cliente) {
-        if (listaClientes.contains(cliente)) {
-            listaClientes.remove(cliente);
-            System.out.println("Cliente " + cliente.getNome() + " removido com sucesso.");
         }
     }
 
@@ -189,86 +172,30 @@ public class Profissional extends Pessoa{
         return null;
     }
 
-
-    // treinos e fichas
-    public void criarFichaTreino(Cliente cliente, FichaTreino novaFicha) {
-        if (cliente != null && novaFicha != null) {
-            cliente.adicionarFicha(novaFicha);
-            System.out.println("Ficha para " + cliente.getNome() + " criada com sucesso.");
-            }
-        }
-    // PERFIL
-    public void atualizarDisp(String novaDisponibilidade) {
-        if (novaDisponibilidade != null && !novaDisponibilidade.isEmpty()) {
-            this.disponibilidade = novaDisponibilidade;
-            System.out.println("Disponibilidade atualizada para: " + novaDisponibilidade);
-        }
-    }
-
     public double calcularValorAula(int dias) {
         return this.valorAula * dias;
     }
-    public void registrarAvaliacao(Cliente aluno, Avaliacao novaAvaliacao) {
-        // Verifica se os objetos não são nulos antes de tentar salvar
-        if (aluno != null && novaAvaliacao != null) {
-            aluno.adicionarAvaliacao(novaAvaliacao); // falta fazer esse metodo
-            System.out.println("Avaliação registrada com sucesso para " + aluno.getNome());
-        } else {
-            System.out.println("Erro: Aluno ou Avaliação inválidos.");
-        }
-    }
-
-    public Cliente buscarAluno(String emailVerAval) {
-        return null;
-    }
-
-    public void addFeedback(Avaliacao avaliacao) {
-        this.avAlunos.add(avaliacao);
-    }
-
-    public void visualizarAvaliacoesDosAlunos() {
-        System.out.println("\n=== FEEDBACKS DOS ALUNOS ===");
-
-        if (avAlunos.isEmpty()) {
-            System.out.println("Nenhuma avaliação recebida ainda.");
-        } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-            for (Avaliacao av : avAlunos) {
-                System.out.println("------------------------------------------------");
-                System.out.println("Data: " + sdf.format(av.getData()));
-                System.out.println("Nota: " + av.getNota() + "/5");
-                System.out.println("Comentário: " + av.getComentario());
-            }
-            System.out.println("------------------------------------------------\n");
-        }
-    }
 
     public void salvarFichaTreinoEmTxt(Cliente aluno) {
-        // 1. Define o nome da pasta
         String nomePasta = "fichas_de_treino";
-
-        // 2. Define o caminho do arquivo, incluindo o nome da pasta e do cliente
+        // 2. Define o caminho, nome da pasta e do cliente
         String nomeArquivo = nomePasta + "/" + aluno.getNome().replaceAll("\\s+", "_") + "_ficha.txt";
 
         try {
             // 3. Cria o objeto File para a pasta
             File pasta = new File(nomePasta);
 
-            // 4. Verifica se a pasta existe. Se não existir, tenta criá-la.
+            // 4. verifica se a pasta existe, se não, cria
             if (!pasta.exists()) {
                 if (pasta.mkdirs()) {
                     System.out.println("Diretório criado: " + nomePasta);
                 } else {
                     System.out.println("Erro ao criar o diretório: " + nomePasta);
-                    return; // Aborta o salvamento se não conseguir criar a pasta
+                    return; // cancela o salvamento
                 }
             }
 
-            // 5. Usa o caminho completo para criar o FileWriter
             FileWriter writer = new FileWriter(nomeArquivo);
-
-            // O restante do seu código de escrita no arquivo (que já estava funcionando)
             writer.write("=== FICHA DE TREINO - " + aluno.getNome() + " ===\n");
             writer.write("Objetivo: " + aluno.getObjetivo() + "\n");
             writer.write("Restrição Física: " + aluno.getRestricaoFisica() + "\n");
@@ -278,7 +205,6 @@ public class Profissional extends Pessoa{
                 writer.write("Nenhum exercício cadastrado.");
             } else {
                 for (Pessoa.exercicies exercicio : aluno.carga) {
-                    // Supondo que 'exercicio.imprimirList()' retorna o formato desejado
                     writer.write(exercicio.getNomeex() +
                             " | Peso: " + exercicio.getPesoex() +
                             " | Reps: " + exercicio.getReps() + "\n");
@@ -286,11 +212,10 @@ public class Profissional extends Pessoa{
             }
 
             writer.close();
-            System.out.println("✅ Ficha de treino de " + aluno.getNome() + " salva com sucesso em: " + nomeArquivo);
+            System.out.println("Ficha de treino de " + aluno.getNome() + " salvo em: " + nomeArquivo);
 
         } catch (IOException e) {
             System.err.println("Erro ao salvar a ficha de treino: " + e.getMessage());
-            // e.printStackTrace(); // Descomente para ver detalhes do erro
         }
     }
     @Override
@@ -301,10 +226,8 @@ public class Profissional extends Pessoa{
                 ", avaliacao=" + avaliacao +
                 ", disponibilidade='" + disponibilidade + '\'' +
                 ", valorAula=" + valorAula +
-                ", avAlunos=" + avAlunos +
                 ", agenda=" + agenda +
                 ", listaClientes=" + listaClientes +
-                ", historicoAvaliacoes=" + historicoAvaliacoes +
                 "} " + super.toString();
 
     }
@@ -327,21 +250,4 @@ public class Profissional extends Pessoa{
     }
         System.out.println("==============================\n");
     }
-    // Adicione dentro da classe Profissional
-    public String toStringArquivo() {
-        // Formato: P;ID;NOME;CPF;TELEFONE;EMAIL;SENHA;SEXO;ESPECIALIDADE;REGISTRO;VALOR
-        return "P;" +
-                getId() + ";" +
-                getNome() + ";" +
-                getCpf() + ";" +
-                getTelefone() + ";" +
-                getEmail() + ";" +
-                getSenha() + ";" +
-                getSexo() + ";" +
-                this.especialidade + ";" +
-                this.numeroRegistro + ";" +
-                this.valorAula;
-    }
 }
-
-

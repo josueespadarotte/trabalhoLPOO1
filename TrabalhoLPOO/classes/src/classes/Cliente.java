@@ -12,13 +12,13 @@ public class Cliente extends Pessoa {
     private String objetivo;
     private String restricaoFisica;
 
-    // Inicializando as listas para evitar erro (NullPointerException)
+
     private List<FichaTreino> fichasTreino = new ArrayList<>();
     private List<Agendamento> meusAgendamentos = new ArrayList<>();
     private ArrayList<Double> medidas = new ArrayList<>();
     public ArrayList<Pessoa.exercicies> carga = new ArrayList<>();
     private List<String> historicoMedidas = new ArrayList<>();
-    private List<Avaliacao> listaAvaliacoes = new ArrayList<>();
+
 
     public Cliente(int id, String nome, String cpf, String telefone, String email, String senha, String sexo,
                    int idade, double peso, double altura, String objetivo, String restricaoFisica) {
@@ -40,15 +40,13 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
         this.restricaoFisica = "Nenhuma";
     }
 
-    public void registrarCarga(String nome, double peso, int reps) {
-        // A sintaxe se torna mais limpa dentro da subclasse
+    public void registrarCarga(String nome, double peso, int reps) {//adiciona o exercicio a lista
         Pessoa.exercicies novoExercicio = this.new exercicies(nome, peso, reps);
         this.carga.add(novoExercicio);
         System.out.println(" Exercício " + nome + " registrado com " + peso + "kg.");
     }
 
-
-    public void removerCarga(int posicao) {
+    public void removerCarga(int posicao) {//remove o exercicio da lista
         if (this.carga.isEmpty()) {
             System.out.println(" Sua ficha de treino está vazia. Nada para remover.");
             return;
@@ -63,7 +61,7 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
             System.out.println(" Erro: Posição inválida (" + posicao + "). Digite um número entre 0 e " + ultimoIndice + ".");
         }
     }
-    public void listarCargaComIndices() {
+    public void listarCargaComIndices() {//toString da lista de exercicios
         System.out.print("\n=== EXERCÍCIOS CADASTRADOS DE " + this.getNome() + " ===");
         if (this.carga.isEmpty()) {
             System.out.println("Não há exercícios cadastrados na sua ficha.");
@@ -78,36 +76,12 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
         System.out.println("=========================================================");
     }
 
-    // Corrigido: Agora salva uma String legível no histórico, não a soma dos valores
     public void atualizarMedidas(double peso, double braco, double cintura, double altura) {
         this.peso = peso;
         this.altura = altura;
         String registro = "Peso: " + peso + "kg | Braço: " + braco + "cm | Cintura: " + cintura + "cm";
         this.historicoMedidas.add(registro);
         medidas.add(peso);
-    }
-
-    public void adicionarFicha(FichaTreino novaFicha) {
-        this.fichasTreino.add(novaFicha);
-    }
-
-    // Estava vazio no original, agora adiciona na lista
-    public void adicionarAvaliacao(Avaliacao novaAvaliacao) {
-        if(novaAvaliacao != null) {
-            this.listaAvaliacoes.add(novaAvaliacao);
-        }
-    }
-
-    public void visualizarAvaliacoes() {
-        System.out.println("=== Histórico de Avaliações ===");
-        if (listaAvaliacoes.isEmpty()) {
-            System.out.println("Nenhuma avaliação registrada.");
-        } else {
-            for (Avaliacao av : listaAvaliacoes) {
-                // Ajuste conforme seus getters em Avaliacao
-                System.out.println("Nota: " + av.getNota() + " | Data: " + av.getData());
-            }
-        }
     }
 
     public String getNome() {
@@ -130,19 +104,8 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
         System.out.println("------------------------------");
     }
 
-    // Mantive o método original getMedida
     public String getMedida() {
         return "Medidas atuais registradas: " + medidas.size();
-    }
-
-    public void visualizarFichaTreino() {
-        if(fichasTreino.isEmpty()){
-            System.out.println("Sem fichas.");
-        } else {
-            for(FichaTreino f : fichasTreino){
-                System.out.println("Ficha ID: " + f.getId() + " - " + f.getExercicios());
-            }
-        }
     }
 
     @Override
@@ -151,14 +114,11 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
     }
 
     public boolean solicitarAgendamento(Profissional personal, Agendamento novoAgendamento) {
-        // 1. Valida se os objetos não são nulos
         if (personal == null || novoAgendamento == null) {
             System.out.println("Erro: Personal ou Agendamento inválidos.");
             return false;
         }
-
         boolean conseguiuAgendar = personal.marcarHr(this, novoAgendamento);
-
         if (conseguiuAgendar) {
             this.meusAgendamentos.add(novoAgendamento);
             System.out.println("Agendamento salvo no seu histórico!");
@@ -167,22 +127,6 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
             System.out.println("Não foi possível realizar o agendamento (Horário indisponível ou erro).");
             return false;
         }
-    }
-    public String toStringArquivo() {
-        // Formato: C;ID;NOME;CPF;TELEFONE;EMAIL;SENHA;SEXO;IDADE;PESO;ALTURA;OBJETIVO;RESTRICAO
-        return "A;" +
-                getId() + ";" +
-                getNome() + ";" +
-                getCpf() + ";" +
-                getTelefone() + ";" +
-                getEmail() + ";" +
-                getSenha() + ";" +
-                getSexo() + ";" +
-                this.idade + ";" +
-                this.peso + ";" +
-                this.altura + ";" +
-                this.objetivo + ";" +
-                (this.restricaoFisica != null ? this.restricaoFisica : "Nenhuma");
     }
 
     public void lerFichaTreinoDoArquivo() {
@@ -199,9 +143,9 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
                 System.out.println(linha);
             }
         } catch (IOException e) {
-            // Trata o erro se o arquivo não existir (ou outro erro de leitura)
+            // possiveis erros de leitura ou arquivo nao encontrado
             if (e.getMessage().contains("No such file or directory") || e.getMessage().contains("O sistema não pode encontrar o arquivo especificado")) {
-                System.out.println("❌ Erro: Ficha de treino ainda não foi criada ou o arquivo foi movido.");
+                System.out.println("Erro: Ficha de treino ainda não foi criada ou o arquivo foi movido.");
             } else {
                 System.err.println("Erro ao ler a ficha de treino: " + e.getMessage());
             }
