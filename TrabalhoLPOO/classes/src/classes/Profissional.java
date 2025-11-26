@@ -274,6 +274,21 @@ public class Profissional extends Pessoa{
     }
         System.out.println("==============================\n");
     }
+    // Adicione dentro da classe Profissional
+    public String toStringArquivo() {
+        // Formato: P;ID;NOME;CPF;TELEFONE;EMAIL;SENHA;SEXO;ESPECIALIDADE;REGISTRO;VALOR
+        return "P;" +
+                getId() + ";" +
+                getNome() + ";" +
+                getCpf() + ";" +
+                getTelefone() + ";" +
+                getEmail() + ";" +
+                getSenha() + ";" +
+                getSexo() + ";" +
+                this.especialidade + ";" +
+                this.numeroRegistro + ";" +
+                this.valorAula;
+    }
 }
 
 

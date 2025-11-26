@@ -166,4 +166,20 @@ public Cliente(int id, String nome, String cpf, String telefone, String email, S
             return false;
         }
     }
+    public String toStringArquivo() {
+        // Formato: C;ID;NOME;CPF;TELEFONE;EMAIL;SENHA;SEXO;IDADE;PESO;ALTURA;OBJETIVO;RESTRICAO
+        return "C;" +
+                getId() + ";" +
+                getNome() + ";" +
+                getCpf() + ";" +
+                getTelefone() + ";" +
+                getEmail() + ";" +
+                getSenha() + ";" +
+                getSexo() + ";" +
+                this.idade + ";" +
+                this.peso + ";" +
+                this.altura + ";" +
+                this.objetivo + ";" +
+                (this.restricaoFisica != null ? this.restricaoFisica : "Nenhuma");
+    }
 }
